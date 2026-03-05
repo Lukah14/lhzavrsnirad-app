@@ -12,19 +12,19 @@ body.dark {
   --ion-text-color-rgb: 240, 240, 248;
   --ion-card-background: #1c1c2e;
   --ion-item-background: #1c1c2e;
-  --ion-toolbar-background: #12121f;
-  --ion-tab-bar-background: #12121f;
+  --ion-toolbar-background: rgba(18, 18, 31, 0.85);
+  --ion-tab-bar-background: rgba(18, 18, 31, 0.90);
 }
 
 /* Light mode explicit overrides */
 body:not(.dark) {
   --ion-color-primary: #00b894;
-  --ion-background-color: #f3f4f8;
-  --ion-background-color-rgb: 243, 244, 248;
+  --ion-background-color: #f0f2f8;
+  --ion-background-color-rgb: 240, 242, 248;
   --ion-card-background: #ffffff;
   --ion-item-background: #ffffff;
-  --ion-toolbar-background: #ffffff;
-  --ion-tab-bar-background: #ffffff;
+  --ion-toolbar-background: rgba(255, 255, 255, 0.85);
+  --ion-tab-bar-background: rgba(255, 255, 255, 0.9);
 }
 
 /* Typography baseline */
@@ -54,9 +54,11 @@ ion-card.dash-card {
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(128, 128, 128, 0.3);
   border-radius: 2px;

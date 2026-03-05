@@ -80,7 +80,24 @@ body.dark {
    ========================================================================== */
 
 .home-page ion-content {
-  --background: var(--ion-background-color);
+  --background: transparent;
+}
+
+/* Gradient blob background layer behind all content */
+.home-page ion-content::part(background) {
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 5%, rgba(0, 212, 170, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 85%, rgba(116, 192, 252, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 75% 20%, rgba(168, 130, 252, 0.10) 0%, transparent 55%),
+    #f0f2f8;
+}
+
+body.dark .home-page ion-content::part(background) {
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 5%, rgba(0, 212, 170, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 85%, rgba(116, 192, 252, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 75% 20%, rgba(168, 130, 252, 0.08) 0%, transparent 55%),
+    #0f0f1a;
 }
 
 .home-scroll-content {
@@ -163,7 +180,7 @@ body.dark {
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 }
 
 .date-nav-btn ion-icon {
@@ -291,9 +308,17 @@ body.dark {
   transition: width 0.5s ease;
 }
 
-.macro-bar-fill.protein { background: var(--dash-protein-color); }
-.macro-bar-fill.carbs   { background: var(--dash-carbs-color); }
-.macro-bar-fill.fat     { background: var(--dash-fat-color); }
+.macro-bar-fill.protein {
+  background: var(--dash-protein-color);
+}
+
+.macro-bar-fill.carbs {
+  background: var(--dash-carbs-color);
+}
+
+.macro-bar-fill.fat {
+  background: var(--dash-fat-color);
+}
 
 .macro-bar-grams {
   font-size: 12px;
@@ -325,7 +350,7 @@ body.dark {
   background: var(--dash-track-color);
 }
 
-.meal-row + .meal-row {
+.meal-row+.meal-row {
   border-top: 1px solid var(--dash-card-border);
 }
 
@@ -761,17 +786,20 @@ body.dark {
    ========================================================================== */
 
 @keyframes shimmer {
-  0%   { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
+  0% {
+    background-position: -400px 0;
+  }
+
+  100% {
+    background-position: 400px 0;
+  }
 }
 
 .skel-block {
-  background: linear-gradient(
-    90deg,
-    var(--dash-skeleton-base) 25%,
-    var(--dash-skeleton-highlight) 50%,
-    var(--dash-skeleton-base) 75%
-  );
+  background: linear-gradient(90deg,
+      var(--dash-skeleton-base) 25%,
+      var(--dash-skeleton-highlight) 50%,
+      var(--dash-skeleton-base) 75%);
   background-size: 800px 100%;
   animation: shimmer 1.4s infinite;
   border-radius: 8px;
