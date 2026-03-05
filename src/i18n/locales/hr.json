@@ -81,5 +81,26 @@
       "viewMore": "Prikaži napredak",
       "noData": "Unesi tjelesnu masu kako bi vidio/la napredak"
     }
+  },
+  "errors": {
+    "api": {
+      "network":           "Greška mreže. Provjeri vezu i pokušaj ponovo.",
+      "timeout":           "Zahtjev je istekao. Pokušaj ponovo.",
+      "off_failed":        "OpenFoodFacts trenutno nije dostupan.",
+      "usda_failed":       "USDA baza namirnica trenutno nije dostupna.",
+      "fatsecret_failed":  "FatSecret trenutno nije dostupan.",
+      "no_results":        "Nema pronađenih namirnica za \"{{term}}\".",
+      "barcode_not_found": "Nema pronađenog proizvoda za ovaj barkod."
+    }
+  },
+  "foodSearch": {
+    "placeholder":    "Pretraži namirnicu…",
+    "recentSearches": "Nedavne pretrage",
+    "clearRecents":   "Obriši",
+    "resultsFrom":    "Rezultati od {{sources}}",
+    "loadMore":       "Učitaj više",
+    "addToLog":       "Dodaj u dnevnik",
+    "per100g":        "na 100 g",
+    "serving":        "Porcija: {{grams}} g"
   }
 }

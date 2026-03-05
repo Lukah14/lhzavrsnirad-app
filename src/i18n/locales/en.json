@@ -81,5 +81,26 @@
       "viewMore": "View progress",
       "noData": "Log your weight to see progress"
     }
+  },
+  "errors": {
+    "api": {
+      "network":           "Network error. Check your connection and try again.",
+      "timeout":           "Request timed out. Please try again.",
+      "off_failed":        "OpenFoodFacts is currently unavailable.",
+      "usda_failed":       "USDA food database is currently unavailable.",
+      "fatsecret_failed":  "FatSecret is currently unavailable.",
+      "no_results":        "No foods found for \"{{term}}\".",
+      "barcode_not_found": "No product found for this barcode."
+    }
+  },
+  "foodSearch": {
+    "placeholder":    "Search for a food…",
+    "recentSearches": "Recent searches",
+    "clearRecents":   "Clear",
+    "resultsFrom":    "Results from {{sources}}",
+    "loadMore":       "Load more",
+    "addToLog":       "Add to log",
+    "per100g":        "per 100 g",
+    "serving":        "Serving: {{grams}} g"
   }
 }
