@@ -1,68 +1,70 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* ==========================================================================
+   Global base styles — Makrion
+   ========================================================================== */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* Ionic dark mode: applied when <body class="dark"> */
+body.dark {
+  /* Maps to Ionic's dark palette */
+  --ion-color-primary: #00d4aa;
+  --ion-background-color: #0f0f1a;
+  --ion-background-color-rgb: 15, 15, 26;
+  --ion-text-color: #f0f0f8;
+  --ion-text-color-rgb: 240, 240, 248;
+  --ion-card-background: #1c1c2e;
+  --ion-item-background: #1c1c2e;
+  --ion-toolbar-background: #12121f;
+  --ion-tab-bar-background: #12121f;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+/* Light mode explicit overrides */
+body:not(.dark) {
+  --ion-color-primary: #00b894;
+  --ion-background-color: #f3f4f8;
+  --ion-background-color-rgb: 243, 244, 248;
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-toolbar-background: #ffffff;
+  --ion-tab-bar-background: #ffffff;
+}
+
+/* Typography baseline */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+/* Remove IonCard default margin so our .dash-card margin takes over */
+ion-card.dash-card {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Scrollbar (non-iOS) */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.3);
+  border-radius: 2px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Focus ring: keyboard accessibility */
+:focus-visible {
+  outline: 2px solid var(--dash-accent, #00d4aa);
+  outline-offset: 2px;
+  border-radius: 4px;
 }

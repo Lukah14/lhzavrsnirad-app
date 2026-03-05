@@ -1,0 +1,85 @@
+{
+  "common": {
+    "today": "Danas",
+    "yesterday": "Jučer",
+    "tomorrow": "Sutra",
+    "kcal": "kcal",
+    "g": "g",
+    "l": "L",
+    "ml": "ml",
+    "kg": "kg",
+    "min": "min",
+    "viewAll": "Prikaži sve",
+    "add": "Dodaj",
+    "noData": "Nema podataka",
+    "loading": "Učitavanje…"
+  },
+  "dashboard": {
+    "greeting": "Zdravo, {{name}}!",
+    "weekLabel": "Tjedan {{week}}",
+    "summary": {
+      "title": "Sažetak",
+      "remaining": "Preostalo",
+      "eaten": "Pojeno",
+      "burned": "Sagoreno",
+      "goal": "Cilj",
+      "details": "Detalji"
+    },
+    "macros": {
+      "protein": "Proteini",
+      "carbs": "Ugljikohidrati",
+      "fat": "Masti"
+    },
+    "meals": {
+      "title": "Prehrana",
+      "more": "Više",
+      "breakfast": "Doručak",
+      "lunch": "Ručak",
+      "dinner": "Večera",
+      "snack": "Užina",
+      "addFood": "Dodaj hranu",
+      "viewAll": "Prikaži sve",
+      "noItems": "Još nema unesenih obroka",
+      "subtotalKcal": "{{kcal}} kcal",
+      "macroShort": "B {{p}}g · UH {{c}}g · M {{f}}g"
+    },
+    "activity": {
+      "title": "Aktivnost",
+      "more": "Više",
+      "workoutCount_one": "{{count}} trening",
+      "workoutCount_other": "{{count}} treninga",
+      "duration": "{{minutes}} min",
+      "burned": "{{kcal}} kcal sagoreno",
+      "addWorkout": "Unesi trening",
+      "presetWalk": "Šetnja 30 min",
+      "presetGym": "Teretana 60 min",
+      "noActivity": "Nema zabilježene aktivnosti",
+      "noActivityHint": "Unesi trening kako bi vidio/la potrošnju"
+    },
+    "habits": {
+      "title": "Navike",
+      "completed": "{{done}} / {{total}} dovršeno",
+      "addHabit": "Dodaj naviku",
+      "noHabits": "Još nema postavljenih navika",
+      "noHabitsHint": "Gradi zdrave rutine korak po korak"
+    },
+    "water": {
+      "title": "Voda",
+      "goalLabel": "Cilj {{value}} L",
+      "currentLabel": "{{value}} L",
+      "add250": "+250 ml",
+      "add500": "+500 ml",
+      "add750": "+750 ml",
+      "noWater": "Počni pratiti unos vode danas"
+    },
+    "progress": {
+      "title": "Napredak",
+      "weightValue": "{{value}} kg",
+      "deltaPositive": "+{{value}} kg",
+      "deltaNegative": "{{value}} kg",
+      "deltaThisWeek": "ovaj tjedan",
+      "viewMore": "Prikaži napredak",
+      "noData": "Unesi tjelesnu masu kako bi vidio/la napredak"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "common": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "kcal": "kcal",
+    "g": "g",
+    "l": "L",
+    "ml": "ml",
+    "kg": "kg",
+    "min": "min",
+    "viewAll": "View all",
+    "add": "Add",
+    "noData": "No data yet",
+    "loading": "Loading…"
+  },
+  "dashboard": {
+    "greeting": "Hello, {{name}}!",
+    "weekLabel": "Week {{week}}",
+    "summary": {
+      "title": "Summary",
+      "remaining": "Remaining",
+      "eaten": "Eaten",
+      "burned": "Burned",
+      "goal": "Goal",
+      "details": "Details"
+    },
+    "macros": {
+      "protein": "Protein",
+      "carbs": "Carbs",
+      "fat": "Fat"
+    },
+    "meals": {
+      "title": "Nutrition",
+      "more": "More",
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snack",
+      "addFood": "Add food",
+      "viewAll": "View all",
+      "noItems": "No items logged yet",
+      "subtotalKcal": "{{kcal}} kcal",
+      "macroShort": "P {{p}}g · C {{c}}g · F {{f}}g"
+    },
+    "activity": {
+      "title": "Activity",
+      "more": "More",
+      "workoutCount_one": "{{count}} workout",
+      "workoutCount_other": "{{count}} workouts",
+      "duration": "{{minutes}} min",
+      "burned": "{{kcal}} kcal burned",
+      "addWorkout": "Log workout",
+      "presetWalk": "Walk 30 min",
+      "presetGym": "Gym 60 min",
+      "noActivity": "No activity logged",
+      "noActivityHint": "Log a workout to see your burn"
+    },
+    "habits": {
+      "title": "Habits",
+      "completed": "{{done}} / {{total}} done",
+      "addHabit": "Add habit",
+      "noHabits": "No habits set up yet",
+      "noHabitsHint": "Build healthy routines one day at a time"
+    },
+    "water": {
+      "title": "Water",
+      "goalLabel": "Goal {{value}} L",
+      "currentLabel": "{{value}} L",
+      "add250": "+250 ml",
+      "add500": "+500 ml",
+      "add750": "+750 ml",
+      "noWater": "Start tracking water today"
+    },
+    "progress": {
+      "title": "Progress",
+      "weightValue": "{{value}} kg",
+      "deltaPositive": "+{{value}} kg",
+      "deltaNegative": "{{value}} kg",
+      "deltaThisWeek": "this week",
+      "viewMore": "View progress",
+      "noData": "Log your weight to see progress"
+    }
+  }
+}
