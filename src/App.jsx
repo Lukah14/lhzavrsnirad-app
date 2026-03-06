@@ -20,6 +20,8 @@ import './index.css';
 /* Context */
 import { AppProvider }        from './context/AppContext';
 import { FoodSearchProvider } from './context/FoodSearchContext';
+/* Navigation */
+import BottomNav from './components/navigation/BottomNav';
 /* Pages */
 import HomePage from './pages/HomePage';
 // ---------------------------------------------------------------------------
@@ -70,6 +72,9 @@ function App() {
             {/* Default redirect */}
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
+
+          {/* Floating bottom nav — position:fixed, stays above all pages */}
+          <BottomNav />
           </IonReactRouter>
         </IonApp>
       </FoodSearchProvider>

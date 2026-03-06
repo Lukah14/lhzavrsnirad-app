@@ -1,40 +1,31 @@
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 import { calcRemaining, calcRatio } from '../../models/dashboard';
+import MacroMiniCard from './MacroMiniCard';
 
 // ---------------------------------------------------------------------------
-// SVG horseshoe ring (270° arc, gap at bottom) — no chart library
+// Full-circle ring (Cal AI style — right side of calorie card)
 // ---------------------------------------------------------------------------
 
 /**
- * Horseshoe arc gauge. Progress fills clockwise from bottom-left to bottom-right.
- * @param {{ value: number, goal: number, size?: number, strokeWidth?: number }} props
+ * Thin full-circle progress ring. Starts at 12 o'clock, fills CW.
+ * @param {{ consumed: number, goal: number, size?: number, strokeWidth?: number }} props
  */
-const HorseshoeRing = memo(function HorseshoeRing({
-  value,
+const CalorieCircle = memo(function CalorieCircle({
+  consumed,
   goal,
-  size = 160,
-  strokeWidth = 13,
+  size = 110,
+  strokeWidth = 9,
 }) {
-  const cx = size / 2;
-  const cy = size / 2;
-  const R = cx - strokeWidth / 2 - 2;
-
+  const cx           = size / 2;
+  const cy           = size / 2;
+  const R            = cx - strokeWidth / 2 - 2;
   const circumference = 2 * Math.PI * R;
-  // 270° visible arc, 90° gap centered at bottom
-  const arcLength  = circumference * (270 / 360);
-  const gapLength  = circumference * (90 / 360);
+  const ratio         = calcRatio(consumed, goal);
+  const progressLen   = circumference * ratio;
 
-  const ratio = calcRatio(value, goal);
-  const progressLength = arcLength * ratio;
-
-  // The circle default-starts at 3 o'clock (right).
-  // rotate(135) places that start point at 7:30 (bottom-left edge of gap).
-  const rotation = `rotate(135 ${cx} ${cy})`;
-
-  // Color: accent while under goal, warning red when over
-  const progressColor = ratio >= 1 ? 'var(--dash-protein-color)' : 'var(--dash-accent)';
+  // rotate(-90) so arc starts at 12 o'clock
+  const rotation = `rotate(-90 ${cx} ${cy})`;
 
   return (
     <svg
@@ -44,25 +35,22 @@ const HorseshoeRing = memo(function HorseshoeRing({
       aria-hidden="true"
       style={{ display: 'block' }}
     >
-      {/* Background track */}
+      {/* Background track — full circle */}
       <circle
         cx={cx} cy={cy} r={R}
         fill="none"
         stroke="var(--dash-track-color)"
         strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        strokeDasharray={`${arcLength} ${gapLength}`}
-        transform={rotation}
       />
-      {/* Progress fill */}
-      {progressLength > 0 && (
+      {/* Progress arc */}
+      {progressLen > 0 && (
         <circle
           cx={cx} cy={cy} r={R}
           fill="none"
-          stroke={progressColor}
+          stroke="var(--dash-text-primary)"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
-          strokeDasharray={`${progressLength} ${circumference - progressLength}`}
+          strokeDasharray={`${progressLen} ${circumference - progressLen}`}
           transform={rotation}
           style={{ transition: 'stroke-dasharray 0.6s ease' }}
         />
@@ -72,29 +60,7 @@ const HorseshoeRing = memo(function HorseshoeRing({
 });
 
 // ---------------------------------------------------------------------------
-// Small macro progress bar row
-// ---------------------------------------------------------------------------
-
-const MacroBarRow = memo(function MacroBarRow({ label, value, goal, colorClass }) {
-  const ratio = calcRatio(value, goal);
-  return (
-    <div className="macro-bar-row">
-      <span className="macro-bar-label">{label}</span>
-      <div className="macro-bar-track" role="progressbar" aria-valuenow={value} aria-valuemax={goal}>
-        <div
-          className={`macro-bar-fill ${colorClass}`}
-          style={{ width: `${ratio * 100}%` }}
-        />
-      </div>
-      <span className="macro-bar-grams">
-        {Math.round(value)} / {Math.round(goal)} g
-      </span>
-    </div>
-  );
-});
-
-// ---------------------------------------------------------------------------
-// Main card
+// Main card — same props as before, completely new layout
 // ---------------------------------------------------------------------------
 
 /**
@@ -105,74 +71,76 @@ const MacroBarRow = memo(function MacroBarRow({ label, value, goal, colorClass }
  */
 const NutritionSummaryCard = memo(function NutritionSummaryCard({ goals, totals }) {
   const { t } = useTranslation();
-  const history = useHistory();
 
   const remaining = useMemo(() => calcRemaining(goals, totals), [goals, totals]);
 
-  const handleDetails = () => {
-    history.push('/nutrition');
-  };
+  const macros = useMemo(() => [
+    {
+      key:       'protein',
+      label:     t('dashboard.macros.protein') + ' left',
+      remaining: goals.proteinGoal - totals.proteinG,
+      consumed:  totals.proteinG,
+      goal:      goals.proteinGoal,
+      color:     'var(--dash-protein-color)',
+      icon:      '🥩',
+    },
+    {
+      key:       'carbs',
+      label:     t('dashboard.macros.carbs') + ' left',
+      remaining: goals.carbsGoal - totals.carbsG,
+      consumed:  totals.carbsG,
+      goal:      goals.carbsGoal,
+      color:     'var(--dash-carbs-color)',
+      icon:      '🌾',
+    },
+    {
+      key:       'fat',
+      label:     t('dashboard.macros.fat') + ' left',
+      remaining: goals.fatGoal - totals.fatG,
+      consumed:  totals.fatG,
+      goal:      goals.fatGoal,
+      color:     'var(--dash-fat-color)',
+      icon:      '🫐',
+    },
+  ], [t, goals, totals]);
 
   return (
-    <div className="dash-card">
-      {/* Card header */}
-      <div className="dash-card-header">
-        <h2 className="dash-card-title">{t('dashboard.summary.title')}</h2>
-        <button className="dash-card-action" onClick={handleDetails}>
-          {t('dashboard.summary.details')}
-        </button>
-      </div>
-
-      <div className="nutrition-summary-card">
-        {/* Calorie ring row: Eaten | Horseshoe | Burned */}
-        <div className="calorie-ring-row">
-          {/* Eaten */}
-          <div className="calorie-stat-block">
-            <span className="calorie-stat-value">{Math.round(totals.consumedKcal)}</span>
-            <span className="calorie-stat-label">{t('dashboard.summary.eaten')}</span>
+    <>
+      {/* ── Calorie hero card ── */}
+      <div className="calorie-hero-card">
+        <div className="calorie-hero-left">
+          <div className="calorie-hero-number">
+            {Math.max(0, Math.round(remaining)).toLocaleString()}
           </div>
-
-          {/* Ring with center overlay */}
-          <div className="calorie-ring-wrapper">
-            <HorseshoeRing value={totals.consumedKcal} goal={goals.caloriesGoal} />
-            <div className="calorie-ring-center">
-              <span className="calorie-remaining-number">
-                {Math.max(0, Math.round(remaining)).toLocaleString()}
-              </span>
-              <span className="calorie-remaining-label">{t('dashboard.summary.remaining')}</span>
-            </div>
-          </div>
-
-          {/* Burned */}
-          <div className="calorie-stat-block">
-            <span className="calorie-stat-value">{Math.round(totals.burnedKcal)}</span>
-            <span className="calorie-stat-label">{t('dashboard.summary.burned')}</span>
+          <div className="calorie-hero-label">
+            {t('dashboard.summary.caloriesLeft')}
           </div>
         </div>
 
-        {/* Macro progress bars */}
-        <div className="macro-bars-section">
-          <MacroBarRow
-            label={t('dashboard.macros.protein')}
-            value={totals.proteinG}
-            goal={goals.proteinGoal}
-            colorClass="protein"
+        <div className="calorie-circle-wrap">
+          <CalorieCircle
+            consumed={totals.consumedKcal}
+            goal={goals.caloriesGoal}
           />
-          <MacroBarRow
-            label={t('dashboard.macros.carbs')}
-            value={totals.carbsG}
-            goal={goals.carbsGoal}
-            colorClass="carbs"
-          />
-          <MacroBarRow
-            label={t('dashboard.macros.fat')}
-            value={totals.fatG}
-            goal={goals.fatGoal}
-            colorClass="fat"
-          />
+          <span className="calorie-circle-icon" aria-hidden="true">🔥</span>
         </div>
       </div>
-    </div>
+
+      {/* ── Macro mini cards ── */}
+      <div className="macro-cards-row">
+        {macros.map((m) => (
+          <MacroMiniCard
+            key={m.key}
+            label={m.label}
+            remaining={m.remaining}
+            consumed={m.consumed}
+            goal={m.goal}
+            color={m.color}
+            icon={m.icon}
+          />
+        ))}
+      </div>
+    </>
   );
 });
 

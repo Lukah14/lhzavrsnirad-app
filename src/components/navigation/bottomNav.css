@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Bottom Navigation Bar — floating pill, mobile-first
+   Matches: white pill / dark pill with raised center Home button
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS design tokens (overridden in dark mode below)
+   -------------------------------------------------------------------------- */
+:root {
+  --bn-bar-bg:            rgba(255, 255, 255, 0.88);
+  --bn-bar-border:        rgba(0, 0, 0, 0.07);
+  --bn-bar-shadow:        0 8px 40px rgba(0, 0, 0, 0.13), 0 2px 8px rgba(0, 0, 0, 0.07);
+  --bn-bar-height:        64px;
+  --bn-bar-radius:        999px;
+
+  --bn-home-bg:           #ffffff;
+  --bn-home-bg-active:    #111111;
+  --bn-home-shadow:       0 4px 20px rgba(0, 0, 0, 0.18), 0 1px 4px rgba(0, 0, 0, 0.10);
+  --bn-home-size:         72px;
+  --bn-home-icon-size:    30px;
+
+  --bn-item-active-bg:    #111111;
+  --bn-item-icon-size:    24px;
+  --bn-item-tap-size:     44px;
+
+  --bn-icon-active-filter: brightness(0) invert(1);
+  --bn-icon-filter:        none;
+}
+
+body.dark {
+  --bn-bar-bg:            rgba(24, 24, 40, 0.92);
+  --bn-bar-border:        rgba(255, 255, 255, 0.09);
+  --bn-bar-shadow:        0 8px 40px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  --bn-home-bg:           #2a2a44;
+  --bn-home-bg-active:    #ffffff;
+  --bn-home-shadow:       0 4px 20px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
+
+  --bn-item-active-bg:    rgba(255, 255, 255, 0.15);
+
+  --bn-icon-active-filter: brightness(0) invert(1);
+  --bn-icon-filter:        none;
+}
+
+/* --------------------------------------------------------------------------
+   Outer wrapper — fixed positioning, centered, respects safe-area
+   -------------------------------------------------------------------------- */
+
+.bn-wrap {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom) + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 520px;
+  z-index: 9999;
+  /* no overflow:hidden — home button protrudes above */
+  pointer-events: none; /* let touch pass through transparent wrapper */
+}
+
+/* --------------------------------------------------------------------------
+   The pill bar
+   -------------------------------------------------------------------------- */
+
+.bn-bar {
+  position: relative;
+  height: var(--bn-bar-height);
+  border-radius: var(--bn-bar-radius);
+  background: var(--bn-bar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--bn-bar-border);
+  box-shadow: var(--bn-bar-shadow);
+  display: flex;
+  align-items: center;
+  overflow: visible; /* allow home button to protrude */
+  pointer-events: all;
+}
+
+/* --------------------------------------------------------------------------
+   Left and right icon groups (3 items each)
+   -------------------------------------------------------------------------- */
+
+.bn-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  padding: 0 4px;
+}
+
+/* gap reserved for the home button in the centre of the bar */
+.bn-center-gap {
+  width: calc(var(--bn-home-size) + 8px); /* slightly wider than button */
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Regular nav item button
+   -------------------------------------------------------------------------- */
+
+.bn-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--bn-item-tap-size);
+  height: var(--bn-item-tap-size);
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+
+.bn-item:active {
+  transform: scale(0.88);
+}
+
+/* Active state — dark/filled circle */
+.bn-item.bn-active {
+  background: var(--bn-item-active-bg);
+}
+
+.bn-item img {
+  width: var(--bn-item-icon-size);
+  height: var(--bn-item-icon-size);
+  object-fit: contain;
+  display: block;
+  filter: var(--bn-icon-filter);
+  pointer-events: none;
+}
+
+/* Make icon white on active dark circle */
+.bn-item.bn-active img {
+  filter: var(--bn-icon-active-filter);
+}
+
+/* --------------------------------------------------------------------------
+   Centre Home button — raised above the pill
+   -------------------------------------------------------------------------- */
+
+.bn-home-btn {
+  position: absolute;
+  left: 50%;
+  /* bottom=10px → button occupies 10px to 82px from bar bottom.
+     Bar is 64px, so button protrudes 82-64 = 18px above bar top. */
+  bottom: 10px;
+  transform: translateX(-50%);
+
+  width: var(--bn-home-size);
+  height: var(--bn-home-size);
+  border-radius: 50%;
+  background: var(--bn-home-bg);
+  border: none;
+  box-shadow: var(--bn-home-shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bn-home-btn:active {
+  transform: translateX(-50%) scale(0.91);
+}
+
+/* When the user IS on the home route */
+.bn-home-btn.bn-active {
+  background: var(--bn-home-bg-active);
+  box-shadow: var(--bn-home-shadow), 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+
+.bn-home-btn img {
+  width: var(--bn-home-icon-size);
+  height: var(--bn-home-icon-size);
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+/* Invert home icon on dark active circle (light mode) */
+.bn-home-btn.bn-active img {
+  filter: brightness(0) invert(1);
+}
+
+/* In dark mode the home button is already dark-ish; active = white bg → dark icon */
+body.dark .bn-home-btn.bn-active img {
+  filter: brightness(0); /* make icon dark on white button */
+}
+
+/* --------------------------------------------------------------------------
+   Global content bottom padding so pages don't hide behind the bar.
+   Uses Ionic's IonContent scroll-container CSS custom property.
+   -------------------------------------------------------------------------- */
+
+ion-content {
+  --padding-bottom: calc(env(safe-area-inset-bottom) + 100px);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: tiny phones — shrink icons slightly
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  :root {
+    --bn-item-icon-size: 20px;
+    --bn-home-icon-size: 26px;
+    --bn-home-size: 64px;
+  }
+
+  .bn-center-gap {
+    width: 72px;
+  }
+}

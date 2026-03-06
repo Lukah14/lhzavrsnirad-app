@@ -66,7 +66,11 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    document.body.classList.toggle('dark', theme === 'dark');
+    const isDark = theme === 'dark';
+    // Our custom dark-mode CSS selector
+    document.body.classList.toggle('dark', isDark);
+    // Ionic palette class (controls IonInput, IonSelect, etc.)
+    document.documentElement.classList.toggle('ion-palette-dark', isDark);
     localStorage.setItem('makrion_theme', theme);
   }, [theme]);
 

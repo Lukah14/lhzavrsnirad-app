@@ -2,21 +2,25 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   IonContent,
   IonHeader,
+  IonIcon,
   IonPage,
   IonToolbar,
 } from '@ionic/react';
+import { addOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import { useAppContext } from '../context/AppContext';
 
-import DateHeader          from '../components/dashboard/DateHeader';
+import WeekStrip            from '../components/dashboard/WeekStrip';
 import NutritionSummaryCard from '../components/dashboard/NutritionSummaryCard';
-import MealLogCard         from '../components/dashboard/MealLogCard';
-import ActivityCard        from '../components/dashboard/ActivityCard';
-import HabitTrackerCard    from '../components/dashboard/HabitTrackerCard';
-import WaterCard           from '../components/dashboard/WaterCard';
+import MealLogCard          from '../components/dashboard/MealLogCard';
+import ActivityCard         from '../components/dashboard/ActivityCard';
+import HabitTrackerCard     from '../components/dashboard/HabitTrackerCard';
+import WaterCard            from '../components/dashboard/WaterCard';
 import ProgressSnapshotCard from '../components/dashboard/ProgressSnapshotCard';
-import DashboardSkeleton   from '../components/dashboard/DashboardSkeleton';
+import RecentlyUploadedCard from '../components/dashboard/RecentlyUploadedCard';
+import DashboardSkeleton    from '../components/dashboard/DashboardSkeleton';
 
 import '../theme/dashboard.css';
 
@@ -27,11 +31,31 @@ import '../theme/dashboard.css';
 const todayISO = () => new Date().toISOString().split('T')[0];
 
 // ---------------------------------------------------------------------------
+// Brand top-bar (app name + streak badge)
+// ---------------------------------------------------------------------------
+
+function HomeTopBar({ streakCount }) {
+  return (
+    <div className="home-brand-bar">
+      <div className="home-brand-name">
+        <span className="home-brand-icon" aria-hidden="true">🌿</span>
+        Makrion
+      </div>
+      <div className="home-streak-badge" aria-label={`Streak: ${streakCount}`}>
+        <span aria-hidden="true">🔥</span>
+        {streakCount}
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
 
 function HomePage() {
-  const { t } = useTranslation();
+  const { t }    = useTranslation();
+  const history  = useHistory();
   const {
     loadDate,
     getDashboardData,
@@ -42,32 +66,41 @@ function HomePage() {
 
   const [selectedDate, setSelectedDate] = useState(todayISO);
 
-  // Load data whenever the selected date changes
+  // Load data whenever the selected date changes — business logic unchanged
   useEffect(() => {
     loadDate(selectedDate);
   }, [selectedDate, loadDate]);
 
-  const data    = getDashboardData(selectedDate);
-  const loading = isDashboardLoading(selectedDate);
+  const data         = getDashboardData(selectedDate);
+  const loading      = isDashboardLoading(selectedDate);
   const showSkeleton = loading && !data;
 
-  // Habit toggle — bound to current date
+  // Habit toggle bound to current date — unchanged
   const handleToggleHabit = useCallback(
     (habitId) => toggleHabit(habitId, selectedDate),
     [toggleHabit, selectedDate]
   );
 
-  // Water add — bound to current date
+  // Water add bound to current date — unchanged
   const handleAddWater = useCallback(
     (ml) => addWater(ml, selectedDate),
     [addWater, selectedDate]
   );
 
+  // Streak display: habits done today (cosmetic only, no new state/API)
+  const streakCount = data
+    ? data.habits.filter((h) => h.done).length
+    : 0;
+
   return (
     <IonPage className="home-page">
+      {/* ── Sticky header: brand bar + week strip ── */}
       <IonHeader translucent>
         <IonToolbar>
-          <DateHeader
+          <HomeTopBar streakCount={streakCount} />
+        </IonToolbar>
+        <IonToolbar>
+          <WeekStrip
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
           />
@@ -75,10 +108,13 @@ function HomePage() {
       </IonHeader>
 
       <IonContent fullscreen>
-        {/* Matches header when content scrolls behind it (iOS) */}
+        {/* iOS collapsing header mirror */}
         <IonHeader collapse="condense">
           <IonToolbar>
-            <DateHeader
+            <HomeTopBar streakCount={streakCount} />
+          </IonToolbar>
+          <IonToolbar>
+            <WeekStrip
               selectedDate={selectedDate}
               onDateChange={setSelectedDate}
             />
@@ -89,46 +125,52 @@ function HomePage() {
 
         {data && (
           <div className="home-scroll-content">
-            {/* ① Nutrition summary + macro progress */}
+            {/* ① Cal AI-style calorie card + macro mini-cards */}
             <NutritionSummaryCard
               goals={data.goals}
               totals={data.totals}
             />
 
-            {/* ② Meal log (4 meals) */}
+            {/* ② Recently uploaded feed */}
+            <RecentlyUploadedCard
+              meals={data.meals}
+              selectedDate={selectedDate}
+            />
+
+            {/* ③ Meal log */}
             <MealLogCard
               meals={data.meals}
               selectedDate={selectedDate}
             />
 
-            {/* ③ Activity */}
+            {/* ④ Activity */}
             <ActivityCard
               totals={data.totals}
               selectedDate={selectedDate}
             />
 
-            {/* ④ Habit tracker */}
+            {/* ⑤ Habit tracker */}
             <HabitTrackerCard
               habits={data.habits}
               onToggle={handleToggleHabit}
               selectedDate={selectedDate}
             />
 
-            {/* ⑤ Water */}
+            {/* ⑥ Water */}
             <WaterCard
               waterMl={data.totals.waterMl}
               waterMlGoal={data.goals.waterMlGoal}
               onAdd={handleAddWater}
             />
 
-            {/* ⑥ Progress snapshot */}
+            {/* ⑦ Progress snapshot */}
             <ProgressSnapshotCard
               progressSnapshot={data.progressSnapshot}
             />
           </div>
         )}
 
-        {/* Empty state: date has no data and is not loading */}
+        {/* Empty state */}
         {!showSkeleton && !data && (
           <div
             style={{
@@ -143,6 +185,15 @@ function HomePage() {
           </div>
         )}
       </IonContent>
+
+      {/* ── Floating action button ── */}
+      <button
+        className="home-fab"
+        aria-label={t('dashboard.addEntry')}
+        onClick={() => history.push('/nutrition/search')}
+      >
+        <IonIcon icon={addOutline} />
+      </button>
     </IonPage>
   );
 }

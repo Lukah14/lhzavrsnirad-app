@@ -23,7 +23,8 @@
       "eaten": "Eaten",
       "burned": "Burned",
       "goal": "Goal",
-      "details": "Details"
+      "details": "Details",
+      "caloriesLeft": "Calories left"
     },
     "macros": {
       "protein": "Protein",
@@ -41,7 +42,8 @@
       "viewAll": "View all",
       "noItems": "No items logged yet",
       "subtotalKcal": "{{kcal}} kcal",
-      "macroShort": "P {{p}}g · C {{c}}g · F {{f}}g"
+      "macroShort": "P {{p}}g · C {{c}}g · F {{f}}g",
+      "tapToAdd": "Tap + to add your first meal of the day"
     },
     "activity": {
       "title": "Activity",
@@ -80,7 +82,9 @@
       "deltaThisWeek": "this week",
       "viewMore": "View progress",
       "noData": "Log your weight to see progress"
-    }
+    },
+    "recentlyUploaded": "Recently uploaded",
+    "addEntry": "Add entry"
   },
   "errors": {
     "api": {
@@ -92,6 +96,15 @@
       "no_results":        "No foods found for \"{{term}}\".",
       "barcode_not_found": "No product found for this barcode."
     }
+  },
+  "nav": {
+    "nutrition":  "Nutrition",
+    "activity":   "Activity",
+    "habits":     "Habits",
+    "home":       "Home",
+    "community":  "Community",
+    "switchMode": "Switch theme",
+    "progress":   "Progress"
   },
   "foodSearch": {
     "placeholder":    "Search for a food…",

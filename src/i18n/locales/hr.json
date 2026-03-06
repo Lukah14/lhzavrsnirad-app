@@ -23,7 +23,8 @@
       "eaten": "Pojeno",
       "burned": "Sagoreno",
       "goal": "Cilj",
-      "details": "Detalji"
+      "details": "Detalji",
+      "caloriesLeft": "Kalorija preostalo"
     },
     "macros": {
       "protein": "Proteini",
@@ -41,7 +42,8 @@
       "viewAll": "Prikaži sve",
       "noItems": "Još nema unesenih obroka",
       "subtotalKcal": "{{kcal}} kcal",
-      "macroShort": "B {{p}}g · UH {{c}}g · M {{f}}g"
+      "macroShort": "B {{p}}g · UH {{c}}g · M {{f}}g",
+      "tapToAdd": "Tapni + za dodavanje prvog obroka dana"
     },
     "activity": {
       "title": "Aktivnost",
@@ -80,7 +82,9 @@
       "deltaThisWeek": "ovaj tjedan",
       "viewMore": "Prikaži napredak",
       "noData": "Unesi tjelesnu masu kako bi vidio/la napredak"
-    }
+    },
+    "recentlyUploaded": "Nedavno dodano",
+    "addEntry": "Dodaj unos"
   },
   "errors": {
     "api": {
@@ -92,6 +96,15 @@
       "no_results":        "Nema pronađenih namirnica za \"{{term}}\".",
       "barcode_not_found": "Nema pronađenog proizvoda za ovaj barkod."
     }
+  },
+  "nav": {
+    "nutrition":  "Prehrana",
+    "activity":   "Aktivnost",
+    "habits":     "Navike",
+    "home":       "Početna",
+    "community":  "Zajednica",
+    "switchMode": "Promijeni temu",
+    "progress":   "Napredak"
   },
   "foodSearch": {
     "placeholder":    "Pretraži namirnicu…",
