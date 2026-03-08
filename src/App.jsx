@@ -20,10 +20,15 @@ import './index.css';
 /* Context */
 import { AppProvider }        from './context/AppContext';
 import { FoodSearchProvider } from './context/FoodSearchContext';
+import { FatSecretProvider }  from './context/FatSecretContext';
+import { HabitProvider }      from './context/HabitContext';
 /* Navigation */
 import BottomNav from './components/navigation/BottomNav';
 /* Pages */
-import HomePage from './pages/HomePage';
+import HomePage             from './pages/HomePage';
+import NutritionSearchPage  from './pages/NutritionSearchPage';
+import FatSecretDemoPage    from './pages/FatSecretDemoPage';
+import HabitTrackerPage     from './pages/HabitTrackerPage';
 // ---------------------------------------------------------------------------
 // Placeholder pages — remove once real pages are built
 // ---------------------------------------------------------------------------
@@ -39,6 +44,10 @@ function App() {
     <AppProvider>
       {/* FoodSearchProvider must be inside AppProvider (needs useAppContext for uid) */}
       <FoodSearchProvider>
+      {/* FatSecretProvider is independent — no AppContext dependency */}
+      <FatSecretProvider>
+      {/* HabitProvider is inside AppProvider (needs user.uid) */}
+      <HabitProvider>
         <IonApp>
           <IonReactRouter>
             <IonRouterOutlet>
@@ -47,13 +56,13 @@ function App() {
             {/* Nutrition */}
             <Route exact path="/nutrition" render={() => <Placeholder name="Nutrition" />} />
             <Route exact path="/nutrition/food-log" render={() => <Placeholder name="Food Log" />} />
-            <Route exact path="/nutrition/search"   render={() => <Placeholder name="Food Search" />} />
+            <Route exact path="/nutrition/search"   component={NutritionSearchPage} />
             <Route exact path="/nutrition/recipes"  render={() => <Placeholder name="Recipes" />} />
             {/* Activity */}
             <Route exact path="/activity"      render={() => <Placeholder name="Activity" />} />
             <Route exact path="/activity/add"  render={() => <Placeholder name="Add Workout" />} />
             {/* Habits */}
-            <Route exact path="/habits" render={() => <Placeholder name="Habit Tracker" />} />
+            <Route exact path="/habits" component={HabitTrackerPage} />
             {/* Community */}
             <Route exact path="/community" render={() => <Placeholder name="Community" />} />
             {/* Progress */}
@@ -66,6 +75,8 @@ function App() {
             <Route exact path="/coach/plans"     render={() => <Placeholder name="Plans" />} />
             <Route exact path="/coach/messages"  render={() => <Placeholder name="Messages" />} />
             <Route exact path="/coach/analytics" render={() => <Placeholder name="Analytics" />} />
+            {/* FatSecret demo */}
+            <Route exact path="/fatsecret-demo" component={FatSecretDemoPage} />
             {/* Auth */}
             <Route exact path="/login"    render={() => <Placeholder name="Login" />} />
             <Route exact path="/register" render={() => <Placeholder name="Register" />} />
@@ -77,6 +88,8 @@ function App() {
           <BottomNav />
           </IonReactRouter>
         </IonApp>
+      </HabitProvider>
+      </FatSecretProvider>
       </FoodSearchProvider>
     </AppProvider>
   );

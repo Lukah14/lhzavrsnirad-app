@@ -10,7 +10,7 @@ import { addOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
-import { useAppContext } from '../context/AppContext';
+import { useAppContext }   from '../context/AppContext';
 
 import WeekStrip            from '../components/dashboard/WeekStrip';
 import NutritionSummaryCard from '../components/dashboard/NutritionSummaryCard';
@@ -60,7 +60,6 @@ function HomePage() {
     loadDate,
     getDashboardData,
     isDashboardLoading,
-    toggleHabit,
     addWater,
   } = useAppContext();
 
@@ -75,19 +74,13 @@ function HomePage() {
   const loading      = isDashboardLoading(selectedDate);
   const showSkeleton = loading && !data;
 
-  // Habit toggle bound to current date — unchanged
-  const handleToggleHabit = useCallback(
-    (habitId) => toggleHabit(habitId, selectedDate),
-    [toggleHabit, selectedDate]
-  );
-
   // Water add bound to current date — unchanged
   const handleAddWater = useCallback(
     (ml) => addWater(ml, selectedDate),
     [addWater, selectedDate]
   );
 
-  // Streak display: habits done today (cosmetic only, no new state/API)
+  // Cosmetic streak count from dashboard data
   const streakCount = data
     ? data.habits.filter((h) => h.done).length
     : 0;
@@ -149,12 +142,8 @@ function HomePage() {
               selectedDate={selectedDate}
             />
 
-            {/* ⑤ Habit tracker */}
-            <HabitTrackerCard
-              habits={data.habits}
-              onToggle={handleToggleHabit}
-              selectedDate={selectedDate}
-            />
+            {/* ⑤ Habit tracker — self-sources from HabitContext */}
+            <HabitTrackerCard selectedDate={selectedDate} />
 
             {/* ⑥ Water */}
             <WaterCard
@@ -190,7 +179,7 @@ function HomePage() {
       <button
         className="home-fab"
         aria-label={t('dashboard.addEntry')}
-        onClick={() => history.push('/nutrition/search')}
+        onClick={(e) => { e.currentTarget.blur(); history.push('/nutrition/search'); }}
       >
         <IonIcon icon={addOutline} />
       </button>

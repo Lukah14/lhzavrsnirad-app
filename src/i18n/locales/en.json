@@ -106,6 +106,16 @@
     "switchMode": "Switch theme",
     "progress":   "Progress"
   },
+  "search": {
+    "title":        "Search foods",
+    "hint":         "Type a food name to search across Open Food Facts, USDA and more.",
+    "addedToast":   "Added to {{meal}}",
+    "noResults":    "No results for \"{{term}}\"",
+    "noResultsHint": "Try a different spelling or a more general term.",
+    "recentSearches": "Recent searches",
+    "kcalPer100g":  "kcal / 100g",
+    "addFood":      "Add {{name}}"
+  },
   "foodSearch": {
     "placeholder":    "Search for a food…",
     "recentSearches": "Recent searches",
@@ -115,5 +125,137 @@
     "addToLog":       "Add to log",
     "per100g":        "per 100 g",
     "serving":        "Serving: {{grams}} g"
+  },
+  "fatSecretCtx": {
+    "foodSearch": {
+      "title":       "Food Search",
+      "placeholder": "Search foods (e.g. chicken breast)…"
+    },
+    "recipeSearch": {
+      "title":       "Recipe Search",
+      "placeholder": "Search recipes (e.g. pasta)…"
+    },
+    "exerciseSearch": {
+      "title": "Exercise Browser"
+    },
+    "recipeTypes": "Recipe type",
+    "all":         "All",
+    "search":      "Search",
+    "loadMore":    "Load more",
+    "noResults":   "No results found.",
+    "intensity": {
+      "all":       "All",
+      "light":     "Light",
+      "moderate":  "Moderate",
+      "strenuous": "Strenuous"
+    },
+    "caloriesBurned": {
+      "title":          "Calories Burned Calculator",
+      "selectExercise": "Select exercise",
+      "weight":         "Your weight (kg)",
+      "minutes":        "Duration (minutes)",
+      "calculate":      "Calculate",
+      "result":         "calories burned"
+    },
+    "filters": {
+      "generic":      "Generic",
+      "brands":       "Brands",
+      "restaurants":  "Restaurants",
+      "supermarkets": "Supermarkets"
+    },
+    "errors": {
+      "food_failed":         "Food search failed. Please try again.",
+      "recipe_failed":       "Recipe search failed. Please try again.",
+      "exercise_failed":     "Could not load exercises.",
+      "brands_failed":       "Could not load brands.",
+      "categories_failed":   "Could not load categories.",
+      "recipe_types_failed": "Could not load recipe types.",
+      "calc_failed":         "Calculation failed. Please check your inputs."
+    }
+  },
+  "habits": {
+    "title":         "Habit Tracker",
+    "viewAll":       "View all",
+    "addHabit":      "+ Add Habit",
+    "noHabits":      "No habits yet",
+    "noHabitsHint":  "Tap + to create your first habit",
+    "completed":     "{{done}} / {{total}} completed",
+    "streak":        "{{days}} day streak",
+    "emptyState":    "No habits scheduled today",
+    "emptyStateHint":"Build better habits, one day at a time.",
+    "editHabit":     "Edit Habit",
+    "deleteHabit":   "Delete",
+    "archiveHabit":  "Archive",
+    "cancel":        "Cancel",
+    "save":          "Save",
+    "back":          "Back",
+    "next":          "Next",
+    "steps": {
+      "category": "Select a category",
+      "evalType": "How do you want to evaluate your progress?",
+      "name":     "Define your habit",
+      "repeat":   "How often do you want to do it?",
+      "schedule": "When do you want to do it?"
+    },
+    "types": {
+      "boolean":       "With a Yes or No",
+      "booleanHint":   "Record whether you succeed with the activity or not",
+      "numeric":       "With a Numeric Value",
+      "numericHint":   "Establish a value as a daily goal or limit",
+      "timer":         "With a Timer",
+      "timerHint":     "Establish a time value as a daily goal",
+      "checklist":     "With a Checklist",
+      "checklistHint": "Evaluate your activity based on sub-items"
+    },
+    "repeat": {
+      "everyDay":          "Every day",
+      "specificWeekDays":  "Specific days of the week",
+      "specificMonthDays": "Specific days of the month",
+      "specificYearDays":  "Specific days of the year",
+      "someDays":          "Some days per period",
+      "custom":            "Custom repeat"
+    },
+    "categories": {
+      "quit":          "Quit a bad habit",
+      "art":           "Art",
+      "meditation":    "Meditation",
+      "study":         "Study",
+      "sports":        "Sports",
+      "entertainment": "Entertainment",
+      "social":        "Social",
+      "finance":       "Finance",
+      "health":        "Health",
+      "work":          "Work",
+      "nutrition":     "Nutrition",
+      "home":          "Home",
+      "outdoor":       "Outdoor",
+      "other":         "Other",
+      "create":        "Create category"
+    },
+    "schedule": {
+      "startDate":  "Start date",
+      "endDate":    "End date",
+      "reminders":  "Time and reminders",
+      "priority":   "Priority",
+      "timeOfDay":  "Time of day"
+    }
+  },
+  "mood": {
+    "title": "Daily Mood",
+    "label": "How are you feeling today?",
+    "saved": "Mood saved"
+  },
+  "moments": {
+    "title":       "Memorable Moments",
+    "subtitle":    "Capture the best moment of your day.",
+    "addMoment":   "+ Add Moment",
+    "emptyState":  "Capture your first memorable moment.",
+    "placeholder": "Describe your moment...",
+    "moodLabel":   "Mood",
+    "tagLabel":    "Tag",
+    "photoLabel":  "Photo",
+    "save":        "Save",
+    "cancel":      "Cancel",
+    "delete":      "Delete"
   }
 }

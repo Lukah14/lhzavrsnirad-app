@@ -146,6 +146,53 @@ export function AppProvider({ children }) {
     // TODO: persist to Firestore
   }, []);
 
+  /** Add a food item to a specific meal for a given date */
+  const addFoodItem = useCallback((mealType, date, food, grams = 100) => {
+    const r2 = (n) => Math.round(n * 100) / 100;
+    const f  = grams / 100;
+    const kcal    = r2((food.per100g?.kcal    ?? 0) * f);
+    const protein = r2((food.per100g?.protein ?? 0) * f);
+    const carbs   = r2((food.per100g?.carbs   ?? 0) * f);
+    const fat     = r2((food.per100g?.fat     ?? 0) * f);
+
+    setDataByDate((prev) => {
+      const entry = prev[date];
+      if (!entry) return prev;
+      const newMeals = entry.meals.map((m) => {
+        if (m.mealType !== mealType) return m;
+        return {
+          ...m,
+          itemsPreview: [
+            ...m.itemsPreview,
+            { name: food.name, kcal, p: protein, c: carbs, f: fat },
+          ].slice(0, 3),
+          subtotal: {
+            kcal: m.subtotal.kcal + kcal,
+            p:    m.subtotal.p    + protein,
+            c:    m.subtotal.c    + carbs,
+            f:    m.subtotal.f    + fat,
+          },
+        };
+      });
+      return {
+        ...prev,
+        [date]: {
+          ...entry,
+          meals: newMeals,
+          totals: {
+            ...entry.totals,
+            consumedKcal: entry.totals.consumedKcal + kcal,
+            proteinG:     entry.totals.proteinG     + protein,
+            carbsG:       entry.totals.carbsG       + carbs,
+            fatG:         entry.totals.fatG         + fat,
+          },
+        },
+      };
+    });
+    // TODO: persist to Firestore
+    // updateDoc(doc(db, 'users', uid, 'logs', date), { meals: updatedMeals, totals: updatedTotals })
+  }, []);
+
   /** Add a quick workout preset to a date's log */
   const addQuickWorkout = useCallback((workout, date) => {
     setDataByDate((prev) => {
@@ -178,8 +225,9 @@ export function AppProvider({ children }) {
       loadDate,
       getDashboardData,
       isDashboardLoading,
-      toggleHabit,
+      // toggleHabit removed — use HabitContext.toggleHabit instead
       addWater,
+      addFoodItem,
       addQuickWorkout,
     }),
     [
@@ -190,8 +238,8 @@ export function AppProvider({ children }) {
       loadDate,
       getDashboardData,
       isDashboardLoading,
-      toggleHabit,
       addWater,
+      addFoodItem,
       addQuickWorkout,
     ]
   );

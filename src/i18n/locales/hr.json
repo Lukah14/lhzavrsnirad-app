@@ -106,6 +106,16 @@
     "switchMode": "Promijeni temu",
     "progress":   "Napredak"
   },
+  "search": {
+    "title":         "Pretraži namirnice",
+    "hint":          "Upiši naziv namirnice za pretragu u Open Food Facts, USDA i više.",
+    "addedToast":    "Dodano u {{meal}}",
+    "noResults":     "Nema rezultata za \"{{term}}\"",
+    "noResultsHint": "Pokušaj drugačiji pravopis ili općenitiji pojam.",
+    "recentSearches": "Nedavne pretrage",
+    "kcalPer100g":   "kcal / 100g",
+    "addFood":       "Dodaj {{name}}"
+  },
   "foodSearch": {
     "placeholder":    "Pretraži namirnicu…",
     "recentSearches": "Nedavne pretrage",
@@ -115,5 +125,137 @@
     "addToLog":       "Dodaj u dnevnik",
     "per100g":        "na 100 g",
     "serving":        "Porcija: {{grams}} g"
+  },
+  "fatSecretCtx": {
+    "foodSearch": {
+      "title":       "Pretraga namirnica",
+      "placeholder": "Pretraži namirnice (npr. pileća prsa)…"
+    },
+    "recipeSearch": {
+      "title":       "Pretraga recepata",
+      "placeholder": "Pretraži recepte (npr. tjestenina)…"
+    },
+    "exerciseSearch": {
+      "title": "Pregled vježbi"
+    },
+    "recipeTypes": "Vrsta recepta",
+    "all":         "Sve",
+    "search":      "Pretraži",
+    "loadMore":    "Učitaj više",
+    "noResults":   "Nema pronađenih rezultata.",
+    "intensity": {
+      "all":       "Sve",
+      "light":     "Lagano",
+      "moderate":  "Umjereno",
+      "strenuous": "Intenzivno"
+    },
+    "caloriesBurned": {
+      "title":          "Kalkulator potrošenih kalorija",
+      "selectExercise": "Odaberi vježbu",
+      "weight":         "Tvoja tjelesna masa (kg)",
+      "minutes":        "Trajanje (minute)",
+      "calculate":      "Izračunaj",
+      "result":         "potrošenih kalorija"
+    },
+    "filters": {
+      "generic":      "Generičko",
+      "brands":       "Brendovi",
+      "restaurants":  "Restorani",
+      "supermarkets": "Supermarketi"
+    },
+    "errors": {
+      "food_failed":         "Pretraga namirnica nije uspjela. Pokušaj ponovo.",
+      "recipe_failed":       "Pretraga recepata nije uspjela. Pokušaj ponovo.",
+      "exercise_failed":     "Nije moguće učitati vježbe.",
+      "brands_failed":       "Nije moguće učitati brendove.",
+      "categories_failed":   "Nije moguće učitati kategorije.",
+      "recipe_types_failed": "Nije moguće učitati vrste recepata.",
+      "calc_failed":         "Izračun nije uspio. Provjeri unose."
+    }
+  },
+  "habits": {
+    "title":         "Praćenje navika",
+    "viewAll":       "Pogledaj sve",
+    "addHabit":      "+ Dodaj naviku",
+    "noHabits":      "Nema navika",
+    "noHabitsHint":  "Klikni + za dodavanje prve navike",
+    "completed":     "{{done}} / {{total}} dovršeno",
+    "streak":        "{{days}} dana niz",
+    "emptyState":    "Nema navika zakazanih za danas",
+    "emptyStateHint":"Gradi bolje navike, jedan dan po jedan.",
+    "editHabit":     "Uredi naviku",
+    "deleteHabit":   "Izbriši",
+    "archiveHabit":  "Arhiviraj",
+    "cancel":        "Odustani",
+    "save":          "Spremi",
+    "back":          "Natrag",
+    "next":          "Dalje",
+    "steps": {
+      "category": "Odaberi kategoriju",
+      "evalType": "Kako želiš pratiti napredak?",
+      "name":     "Definiraj naviku",
+      "repeat":   "Koliko često?",
+      "schedule": "Kada to želiš raditi?"
+    },
+    "types": {
+      "boolean":       "Da ili Ne",
+      "booleanHint":   "Bilježi jesi li uspješno izveo aktivnost",
+      "numeric":       "Numeričkom vrijednošću",
+      "numericHint":   "Postavi dnevni cilj ili ograničenje",
+      "timer":         "Tajmerom",
+      "timerHint":     "Postavi vremenski cilj",
+      "checklist":     "Kontrolnom listom",
+      "checklistHint": "Procijeni aktivnost na temelju pod-stavki"
+    },
+    "repeat": {
+      "everyDay":          "Svaki dan",
+      "specificWeekDays":  "Određeni dani u tjednu",
+      "specificMonthDays": "Određeni dani u mjesecu",
+      "specificYearDays":  "Određeni dani u godini",
+      "someDays":          "Nekoliko dana po periodu",
+      "custom":            "Prilagođeno ponavljanje"
+    },
+    "categories": {
+      "quit":          "Prestani s lošom navikom",
+      "art":           "Umjetnost",
+      "meditation":    "Meditacija",
+      "study":         "Učenje",
+      "sports":        "Sport",
+      "entertainment": "Zabava",
+      "social":        "Društvo",
+      "finance":       "Financije",
+      "health":        "Zdravlje",
+      "work":          "Posao",
+      "nutrition":     "Prehrana",
+      "home":          "Dom",
+      "outdoor":       "Priroda",
+      "other":         "Ostalo",
+      "create":        "Stvori kategoriju"
+    },
+    "schedule": {
+      "startDate":  "Datum početka",
+      "endDate":    "Datum završetka",
+      "reminders":  "Podsjetnici",
+      "priority":   "Prioritet",
+      "timeOfDay":  "Dio dana"
+    }
+  },
+  "mood": {
+    "title": "Raspoloženje danas",
+    "label": "Kako se osjećaš danas?",
+    "saved": "Raspoloženje spremljeno"
+  },
+  "moments": {
+    "title":       "Nezaboravni trenuci",
+    "subtitle":    "Zabilježi najljepši trenutak svog dana.",
+    "addMoment":   "+ Dodaj trenutak",
+    "emptyState":  "Zabilježi svoji prvi nezaboravni trenutak.",
+    "placeholder": "Opiši svoj trenutak...",
+    "moodLabel":   "Raspoloženje",
+    "tagLabel":    "Oznaka",
+    "photoLabel":  "Fotografija",
+    "save":        "Spremi",
+    "cancel":      "Odustani",
+    "delete":      "Izbriši"
   }
 }

@@ -3,6 +3,7 @@
   "description": "Firebase Cloud Functions — API proxy for OpenFoodFacts, USDA FoodData Central, FatSecret",
   "version": "1.0.0",
   "private": true,
+  "type": "commonjs",
   "engines": {
     "node": "18"
   },

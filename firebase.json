@@ -20,7 +20,10 @@
       {
         "source": "**/*.@(js|css|woff2|woff|ttf)",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
         ]
       }
     ]
@@ -39,5 +42,11 @@
     "ui": {
       "enabled": true
     }
+  },
+  "firestore": {
+    "database": "(default)",
+    "location": "eur3",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   }
 }

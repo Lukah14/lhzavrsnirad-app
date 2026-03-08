@@ -121,12 +121,24 @@ async function queryExternalAPIs(term, page) {
   ]);
   const foods  = [];
   const errors = [];
-  if (offResult.status  === 'fulfilled')  foods.push(...offResult.value);
-  else errors.push('off');
-  if (usdaResult.status === 'fulfilled')  foods.push(...usdaResult.value);
-  else errors.push('usda');
-  if (fsResult.status   === 'fulfilled')  foods.push(...fsResult.value);
-  else errors.push('fatsecret');
+  if (offResult.status  === 'fulfilled') {
+    foods.push(...offResult.value);
+  } else {
+    errors.push('off');
+    console.warn('[FoodSearch] OpenFoodFacts failed:', offResult.reason?.message ?? offResult.reason);
+  }
+  if (usdaResult.status === 'fulfilled') {
+    foods.push(...usdaResult.value);
+  } else {
+    errors.push('usda');
+    console.warn('[FoodSearch] USDA failed:', usdaResult.reason?.message ?? usdaResult.reason);
+  }
+  if (fsResult.status   === 'fulfilled') {
+    foods.push(...fsResult.value);
+  } else {
+    errors.push('fatsecret');
+    console.warn('[FoodSearch] FatSecret failed:', fsResult.reason?.message ?? fsResult.reason);
+  }
   // hasMore: conservative — assume more if any provider returned results
   const hasMore = foods.length >= 15;
   return { foods, hasMore, errors };
@@ -186,8 +198,11 @@ export function FoodSearchProvider({ children }) {
           : merged;
         setResults(finalList);
         setHasMore(externalHasMore);
-        // Surface a non-fatal warning if some providers failed
-        if (externalErrors.length > 0 && externalFoods.length === 0 && firestoreResults.length === 0) {
+        // Surface a network error only when ALL providers failed and there are zero results.
+        // If at least one provider returned food (or Firestore had results) the user
+        // still sees data, so we stay silent about the partial failures.
+        const allExternalFailed = externalErrors.length === 3; // off + usda + fatsecret
+        if (allExternalFailed && externalFoods.length === 0 && firestoreResults.length === 0) {
           setError('errors.api.network');
         }
         // --- Step 4: Store recent search ---
