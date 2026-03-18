@@ -1,0 +1,460 @@
+/* ==========================================================================
+   Design System — Makrion
+   Single source of truth for tokens. Figma Health App reference.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Colors — Light mode
+   -------------------------------------------------------------------------- */
+:root {
+  --ds-primary: #18181B;
+  --ds-primary-foreground: #ffffff;
+  --ds-surface: #ffffff;
+  --ds-background: #F8F8F8;
+  --ds-card: #ffffff;
+  --ds-card-foreground: #18181B;
+  --ds-text: #18181B;
+  --ds-text-secondary: #9CA3AF;
+  --ds-text-muted: #D1D5DB;
+  --ds-border: rgba(0, 0, 0, 0.06);
+  --ds-border-strong: rgba(0, 0, 0, 0.12);
+  --ds-success: #34D399;
+  --ds-success-muted: rgba(52, 211, 153, 0.12);
+  --ds-warning: #FBBF24;
+  --ds-warning-muted: rgba(251, 191, 36, 0.12);
+  --ds-danger: #F87171;
+  --ds-danger-muted: rgba(248, 113, 113, 0.12);
+  --ds-protein: #FF6565;
+  --ds-protein-muted: rgba(255, 101, 101, 0.12);
+  --ds-carbs: #FF9F43;
+  --ds-carbs-muted: rgba(255, 159, 67, 0.12);
+  --ds-fat: #5B9CF6;
+  --ds-fat-muted: rgba(91, 156, 246, 0.12);
+  --ds-water: #22D3EE;
+  --ds-water-muted: rgba(34, 211, 238, 0.12);
+  --ds-habit-accent: #A78BFA;
+  --ds-habit-muted: rgba(167, 139, 250, 0.12);
+  --ds-accent: #00c49a;
+  --ds-accent-muted: rgba(0, 196, 154, 0.12);
+  --ds-track: #F3F4F6;
+
+  /* Streak chip accents (Figma target) */
+  --ds-chip-nutrition-bg: rgba(255, 159, 67, 0.2);
+  --ds-chip-nutrition-icon: #E67E22;
+  --ds-chip-activity-bg: rgba(52, 211, 153, 0.2);
+  --ds-chip-activity-icon: #10B981;
+  --ds-chip-habits-bg: rgba(167, 139, 250, 0.2);
+  --ds-chip-habits-icon: #8B5CF6;
+
+  /* Typography */
+  --ds-font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ds-text-xs: 11px;
+  --ds-text-sm: 13px;
+  --ds-text-base: 15px;
+  --ds-text-lg: 17px;
+  --ds-text-xl: 20px;
+  --ds-text-2xl: 26px;
+  --ds-text-3xl: 32px;
+  --ds-weight-normal: 400;
+  --ds-weight-medium: 500;
+  --ds-weight-semibold: 600;
+  --ds-weight-bold: 700;
+  --ds-weight-extrabold: 800;
+
+  /* Spacing */
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-5: 20px;
+  --ds-space-6: 24px;
+  --ds-space-7: 28px;
+  --ds-space-8: 32px;
+
+  /* Radius */
+  --ds-radius-sm: 8px;
+  --ds-radius-md: 14px;
+  --ds-radius-lg: 20px;
+  --ds-radius-xl: 24px;
+
+  /* Shadows */
+  --ds-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --ds-shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --ds-shadow-md: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --ds-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  /* Borders */
+  --ds-border-width: 1px;
+  --ds-border-color: var(--ds-border);
+}
+
+/* --------------------------------------------------------------------------
+   Colors — Dark mode
+   -------------------------------------------------------------------------- */
+body.dark {
+  --ds-primary: #ffffff;
+  --ds-primary-foreground: #18181B;
+  --ds-surface: #1A1A24;
+  --ds-background: #0A0A12;
+  --ds-card: #1A1A24;
+  --ds-card-foreground: #ffffff;
+  --ds-text: #ffffff;
+  --ds-text-secondary: #9CA3AF;
+  --ds-text-muted: rgba(255, 255, 255, 0.35);
+  --ds-border: rgba(255, 255, 255, 0.05);
+  --ds-border-strong: rgba(255, 255, 255, 0.1);
+  --ds-track: rgba(255, 255, 255, 0.08);
+  --ds-protein-muted: rgba(255, 101, 101, 0.1);
+  --ds-carbs-muted: rgba(255, 159, 67, 0.1);
+  --ds-fat-muted: rgba(91, 156, 246, 0.1);
+  --ds-water-muted: rgba(34, 211, 238, 0.1);
+  --ds-habit-muted: rgba(167, 139, 250, 0.12);
+  --ds-chip-nutrition-bg: rgba(255, 159, 67, 0.15);
+  --ds-chip-activity-bg: rgba(52, 211, 153, 0.15);
+  --ds-chip-habits-bg: rgba(167, 139, 250, 0.15);
+  --ds-shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --ds-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --ds-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   Backward-compatible aliases (--dash-* → --ds-*)
+   -------------------------------------------------------------------------- */
+:root {
+  --dash-accent: var(--ds-accent);
+  --dash-accent-rgb: 0, 196, 154;
+  --dash-accent-muted: var(--ds-accent-muted);
+  --dash-water-color: var(--ds-water);
+  --dash-water-muted: var(--ds-water-muted);
+  --dash-habit-accent: var(--ds-habit-accent);
+  --dash-habit-muted: var(--ds-habit-muted);
+  --dash-protein-color: var(--ds-protein);
+  --dash-carbs-color: var(--ds-carbs);
+  --dash-fat-color: var(--ds-fat);
+  --dash-page-bg: var(--ds-background);
+  --dash-card-bg: var(--ds-card);
+  --dash-card-border: var(--ds-border);
+  --dash-card-shadow: var(--ds-shadow-card);
+  --dash-card-radius: var(--ds-radius-xl);
+  --dash-track-color: var(--ds-track);
+  --dash-text-primary: var(--ds-text);
+  --dash-text-secondary: var(--ds-text-secondary);
+  --dash-text-muted: var(--ds-text-muted);
+  --dash-page-h-pad: var(--ds-space-4);
+  --dash-section-gap: var(--ds-space-3);
+  --dash-protein-bg: var(--ds-protein-muted);
+  --dash-carbs-bg: var(--ds-carbs-muted);
+  --dash-fat-bg: var(--ds-fat-muted);
+  --dash-habit-done-bg: var(--ds-habit-muted);
+  --dash-habit-done-border: var(--ds-habit-accent);
+  --dash-habit-undone-bg: transparent;
+  --dash-habit-undone-border: var(--ds-border-strong);
+  --dash-skeleton-base: rgba(0, 0, 0, 0.05);
+  --dash-skeleton-highlight: rgba(0, 0, 0, 0.09);
+  --dash-section-title-size: var(--ds-text-lg);
+  --dash-section-title-weight: var(--ds-weight-bold);
+
+  /* Habit-specific (used by habits.css) */
+  --habit-accent: var(--ds-habit-accent);
+  --habit-accent-rgb: 167, 139, 250;
+  --habit-accent-muted: var(--ds-habit-muted);
+  --habit-accent-soft: rgba(167, 139, 250, 0.08);
+  --habit-done-bg: var(--ds-habit-muted);
+  --habit-done-border: var(--ds-habit-accent);
+  --habit-undone-bg: transparent;
+  --habit-undone-border: var(--ds-border-strong);
+  --habit-streak-color: #F97316;
+  --habit-mood-size: 36px;
+  --habit-progress-track: var(--ds-track);
+  --habit-progress-fill: var(--ds-habit-accent);
+}
+
+body.dark {
+  --dash-skeleton-base: rgba(255, 255, 255, 0.04);
+  --dash-skeleton-highlight: rgba(255, 255, 255, 0.08);
+  --habit-undone-border: rgba(255, 255, 255, 0.15);
+  --habit-progress-track: rgba(255, 255, 255, 0.08);
+  --habit-done-bg: rgba(167, 139, 250, 0.18);
+}
+
+/* ==========================================================================
+   UI Component styles
+   ========================================================================== */
+
+.ds-card {
+  background: var(--ds-card);
+  border: var(--ds-border-width) solid var(--ds-border);
+  border-radius: var(--ds-radius-xl);
+  box-shadow: var(--ds-shadow-sm);
+  overflow: hidden;
+}
+
+.ds-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ds-space-4);
+}
+
+.ds-card-title {
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-weight-bold);
+  color: var(--ds-text);
+  margin: 0;
+}
+
+.ds-card-action {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ds-card-body {
+  padding: 0 var(--ds-space-4) var(--ds-space-4);
+}
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-space-3) var(--ds-space-5);
+  font-family: var(--ds-font-family);
+  font-size: var(--ds-text-base);
+  font-weight: var(--ds-weight-bold);
+  border-radius: var(--ds-radius-md);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-btn:active {
+  transform: scale(0.98);
+}
+
+.ds-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ds-btn--primary {
+  background: var(--ds-primary);
+  color: var(--ds-primary-foreground);
+  box-shadow: var(--ds-shadow-sm);
+}
+
+.ds-btn--primary:disabled {
+  background: var(--ds-track);
+  color: var(--ds-text-muted);
+}
+
+.ds-btn--secondary {
+  background: var(--ds-track);
+  color: var(--ds-text);
+  border: var(--ds-border-width) solid var(--ds-border);
+}
+
+.ds-btn--ghost {
+  background: transparent;
+  color: var(--ds-text-secondary);
+}
+
+.ds-btn--full {
+  width: 100%;
+}
+
+.ds-chip {
+  padding: var(--ds-space-2) var(--ds-space-4);
+  font-family: var(--ds-font-family);
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-weight-semibold);
+  border-radius: 999px;
+  border: var(--ds-border-width) solid var(--ds-border);
+  background: var(--ds-card);
+  color: var(--ds-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-chip--selected {
+  background: var(--ds-primary);
+  color: var(--ds-primary-foreground);
+  border-color: var(--ds-primary);
+}
+
+.ds-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ds-space-3);
+}
+
+.ds-section-title {
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-weight-bold);
+  color: var(--ds-text);
+  margin: 0;
+}
+
+.ds-section-action {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ds-progress-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-progress-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ds-empty-state {
+  text-align: center;
+  padding: var(--ds-space-6) var(--ds-space-4);
+}
+
+.ds-empty-state-icon {
+  font-size: 40px;
+  margin-bottom: var(--ds-space-3);
+}
+
+.ds-empty-state-title {
+  font-size: var(--ds-text-base);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text);
+  margin: 0 0 var(--ds-space-1);
+}
+
+.ds-empty-state-hint {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-text-secondary);
+  margin: 0 0 var(--ds-space-4);
+}
+
+.ds-empty-state-cta {
+  margin-top: var(--ds-space-4);
+}
+
+@keyframes ds-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.ds-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--dash-skeleton-base) 25%,
+    var(--dash-skeleton-highlight) 50%,
+    var(--dash-skeleton-base) 75%
+  );
+  background-size: 800px 100%;
+  animation: ds-shimmer 1.4s infinite;
+}
+
+.ds-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-3) var(--ds-space-4);
+  background: var(--ds-card);
+  border: var(--ds-border-width) solid var(--ds-border);
+  border-radius: var(--ds-radius-md);
+  box-shadow: var(--ds-shadow-sm);
+}
+
+.ds-input-icon {
+  font-size: 18px;
+  color: var(--ds-text-secondary);
+  flex-shrink: 0;
+}
+
+.ds-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--ds-font-family);
+  font-size: var(--ds-text-base);
+  color: var(--ds-text);
+  outline: none;
+}
+
+.ds-input::placeholder {
+  color: var(--ds-text-muted);
+}
+
+.ds-modal {
+  --border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
+  --height: auto;
+  --max-height: 92vh;
+}
+
+.ds-modal-inner {
+  padding: 0 0 env(safe-area-inset-bottom, var(--ds-space-4));
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.ds-modal-header {
+  padding: var(--ds-space-4);
+  border-bottom: var(--ds-border-width) solid var(--ds-border);
+}
+
+.ds-modal-title {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+  margin: 0;
+}
+
+.ds-modal-body {
+  padding: var(--ds-space-4);
+}
+
+/* --------------------------------------------------------------------------
+   PageShell — page scaffold
+   -------------------------------------------------------------------------- */
+
+.page-shell {
+  padding: var(--ds-space-3) var(--ds-space-4);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.page-shell--no-pad {
+  padding: 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
+}
+
+/* Coming soon page */
+.coming-soon-page ion-content {
+  --background: var(--ds-background);
+}
+
+.coming-soon-title {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+  margin: 0;
+  padding: var(--ds-space-2) var(--ds-space-4);
+}

@@ -3,6 +3,7 @@ import { IonIcon } from '@ionic/react';
 import { chevronForwardOutline, trendingDownOutline, trendingUpOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import DesignEmptyState from '../ui/DesignEmptyState';
 
 // ---------------------------------------------------------------------------
 // Inline SVG sparkline — no chart library
@@ -114,16 +115,13 @@ const ProgressSnapshotCard = memo(function ProgressSnapshotCard({ progressSnapsh
           </div>
         </div>
       ) : (
-        <div className="progress-no-data">
-          <p>{t('dashboard.progress.noData')}</p>
-          <button
-            className="activity-btn-primary"
-            style={{ marginTop: 12, width: '100%' }}
-            onClick={() => history.push('/progress')}
-          >
-            {t('dashboard.progress.viewMore')}
-          </button>
-        </div>
+        <DesignEmptyState
+          icon="📊"
+          title={t('dashboard.progress.noData')}
+          hint={t('dashboard.progress.noDataHint', { defaultValue: 'Track your weight over time' })}
+          ctaLabel={t('dashboard.progress.viewMore')}
+          onCtaClick={() => history.push('/progress')}
+        />
       )}
     </div>
   );

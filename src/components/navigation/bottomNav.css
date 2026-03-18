@@ -1,25 +1,25 @@
 /* ==========================================================================
    Bottom Navigation Bar — floating pill, mobile-first
-   Matches: white pill / dark pill with raised center Home button
+   Uses design tokens from designSystem.css
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   CSS design tokens (overridden in dark mode below)
+   Tokens — map to design system where applicable
    -------------------------------------------------------------------------- */
 :root {
   --bn-bar-bg:            rgba(255, 255, 255, 0.88);
-  --bn-bar-border:        rgba(0, 0, 0, 0.07);
-  --bn-bar-shadow:        0 8px 40px rgba(0, 0, 0, 0.13), 0 2px 8px rgba(0, 0, 0, 0.07);
+  --bn-bar-border:        var(--ds-border);
+  --bn-bar-shadow:        var(--ds-shadow-lg);
   --bn-bar-height:        64px;
   --bn-bar-radius:        999px;
 
-  --bn-home-bg:           #ffffff;
-  --bn-home-bg-active:    #111111;
-  --bn-home-shadow:       0 4px 20px rgba(0, 0, 0, 0.18), 0 1px 4px rgba(0, 0, 0, 0.10);
+  --bn-home-bg:           var(--ds-card);
+  --bn-home-bg-active:    var(--ds-primary);
+  --bn-home-shadow:       var(--ds-shadow-md);
   --bn-home-size:         72px;
   --bn-home-icon-size:    30px;
 
-  --bn-item-active-bg:    #111111;
+  --bn-item-active-bg:    var(--ds-primary);
   --bn-item-icon-size:    24px;
   --bn-item-tap-size:     44px;
 
@@ -28,12 +28,12 @@
 }
 
 body.dark {
-  --bn-bar-bg:            rgba(24, 24, 40, 0.92);
-  --bn-bar-border:        rgba(255, 255, 255, 0.09);
-  --bn-bar-shadow:        0 8px 40px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --bn-bar-bg:            rgba(26, 26, 36, 0.94);
+  --bn-bar-border:        var(--ds-border);
+  --bn-bar-shadow:        0 8px 40px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
 
-  --bn-home-bg:           #2a2a44;
-  --bn-home-bg-active:    #ffffff;
+  --bn-home-bg:           #2A2A35;
+  --bn-home-bg-active:    var(--ds-primary);
   --bn-home-shadow:       0 4px 20px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
 
   --bn-item-active-bg:    rgba(255, 255, 255, 0.15);
@@ -155,7 +155,7 @@ body.dark {
   height: var(--bn-home-size);
   border-radius: 50%;
   background: var(--bn-home-bg);
-  border: none;
+  border: 3px solid transparent;
   box-shadow: var(--bn-home-shadow);
   cursor: pointer;
   display: flex;
@@ -170,10 +170,11 @@ body.dark {
   transform: translateX(-50%) scale(0.91);
 }
 
-/* When the user IS on the home route */
+/* When the user IS on the home route — Figma target: outline circle, not filled */
 .bn-home-btn.bn-active {
-  background: var(--bn-home-bg-active);
-  box-shadow: var(--bn-home-shadow), 0 0 0 3px rgba(0, 0, 0, 0.08);
+  background: transparent;
+  border: 3px solid var(--ds-primary);
+  box-shadow: var(--bn-home-shadow);
 }
 
 .bn-home-btn img {
@@ -184,14 +185,18 @@ body.dark {
   pointer-events: none;
 }
 
-/* Invert home icon on dark active circle (light mode) */
+/* Active Home: outline style — icon stays dark (no invert) */
 .bn-home-btn.bn-active img {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
-/* In dark mode the home button is already dark-ish; active = white bg → dark icon */
+/* Dark mode: outline in light color so it's visible on dark bar */
+body.dark .bn-home-btn.bn-active {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
 body.dark .bn-home-btn.bn-active img {
-  filter: brightness(0); /* make icon dark on white button */
+  filter: brightness(0) invert(1);
 }
 
 /* --------------------------------------------------------------------------

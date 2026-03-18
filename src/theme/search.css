@@ -1,6 +1,6 @@
 /* ==========================================================================
    Food Search Page — styles
-   Reuses design tokens from dashboard.css (--dash-* variables)
+   Uses design tokens from designSystem.css (--ds-* / --dash-* aliases)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -8,21 +8,11 @@
    -------------------------------------------------------------------------- */
 
 .search-page ion-content {
-  --background: transparent;
+  --background: var(--dash-page-bg, #F5F5F7);
 }
 
-.search-page ion-content::part(background) {
-  background:
-    radial-gradient(ellipse 70% 50% at 10% 5%,  rgba(0, 212, 170, 0.14) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 85%, rgba(116, 192, 252, 0.14) 0%, transparent 60%),
-    #f0f2f8;
-}
-
-body.dark .search-page ion-content::part(background) {
-  background:
-    radial-gradient(ellipse 70% 50% at 10% 5%,  rgba(0, 212, 170, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 85%, rgba(116, 192, 252, 0.06) 0%, transparent 60%),
-    #0f0f1a;
+body.dark .search-page ion-content {
+  --background: var(--dash-page-bg, #0A0A12);
 }
 
 .search-scroll {

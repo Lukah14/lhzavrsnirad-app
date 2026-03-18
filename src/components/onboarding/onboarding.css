@@ -1,0 +1,260 @@
+/* ==========================================================================
+   Onboarding — step styles
+   Uses design tokens from designSystem.css
+   ========================================================================== */
+
+.onboarding-page {
+  --ion-background-color: var(--ds-background);
+}
+
+.onboarding-page ion-content {
+  --background: var(--ds-background);
+}
+
+.onboarding-container {
+  min-height: 100%;
+  padding: var(--ds-space-6) var(--ds-space-4) calc(env(safe-area-inset-bottom) + 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.onboarding-step {
+  width: 100%;
+  max-width: 360px;
+}
+
+.onboarding-step__title {
+  font-size: var(--ds-text-2xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+  margin: 0 0 var(--ds-space-6);
+  text-align: center;
+}
+
+/* Splash */
+.onboarding-splash {
+  text-align: center;
+}
+
+.onboarding-splash__hero {
+  margin-bottom: var(--ds-space-8);
+}
+
+.onboarding-splash__icon {
+  font-size: 64px;
+  display: block;
+  margin-bottom: var(--ds-space-4);
+}
+
+.onboarding-splash__title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ds-text);
+  margin: 0 0 var(--ds-space-2);
+}
+
+.onboarding-splash__tagline {
+  font-size: var(--ds-text-base);
+  color: var(--ds-text-secondary);
+  margin: 0;
+}
+
+.onboarding-splash__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+}
+
+/* Option cards */
+.onboarding-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+}
+
+.onboarding-option {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-4);
+  border-radius: var(--ds-radius-lg);
+  border: 2px solid var(--ds-border);
+  background: var(--ds-card);
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--ds-text-base);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text);
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.onboarding-option:active {
+  opacity: 0.9;
+}
+
+.onboarding-option--selected {
+  border-color: var(--ds-accent);
+  background: var(--ds-accent-muted);
+}
+
+.onboarding-option__icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.onboarding-option__label {
+  flex: 1;
+}
+
+.onboarding-option__check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ds-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Number step */
+.onboarding-number-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  flex-wrap: wrap;
+}
+
+.onboarding-number-input {
+  flex: 1;
+  min-width: 120px;
+  --padding-start: var(--ds-space-4);
+  --padding-end: var(--ds-space-4);
+  --padding-top: var(--ds-space-3);
+  --padding-bottom: var(--ds-space-3);
+  font-size: var(--ds-text-xl);
+  font-weight: 700;
+  text-align: center;
+  border-radius: var(--ds-radius-md);
+  border: 2px solid var(--ds-border);
+  background: var(--ds-card);
+}
+
+.onboarding-unit-toggle {
+  display: flex;
+  gap: var(--ds-space-2);
+}
+
+.onboarding-unit-btn {
+  padding: var(--ds-space-2) var(--ds-space-4);
+  border-radius: var(--ds-radius-sm);
+  border: 2px solid var(--ds-border);
+  background: var(--ds-card);
+  font-size: var(--ds-text-sm);
+  font-weight: 600;
+  color: var(--ds-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.onboarding-unit-btn--active {
+  border-color: var(--ds-accent);
+  background: var(--ds-accent-muted);
+  color: var(--ds-accent);
+}
+
+.onboarding-unit-label {
+  font-size: var(--ds-text-base);
+  font-weight: 600;
+  color: var(--ds-text-secondary);
+}
+
+/* Calculating */
+.onboarding-calculating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-6);
+}
+
+.onboarding-calculating__message {
+  font-size: var(--ds-text-base);
+  font-weight: 600;
+  color: var(--ds-text-secondary);
+  margin: 0;
+}
+
+/* Results */
+.onboarding-results__hint {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-text-secondary);
+  margin: 0 0 var(--ds-space-4);
+}
+
+.onboarding-results__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ds-space-4);
+  margin-bottom: var(--ds-space-6);
+}
+
+.onboarding-results__field label {
+  display: block;
+  font-size: var(--ds-text-sm);
+  font-weight: 600;
+  color: var(--ds-text-secondary);
+  margin-bottom: var(--ds-space-1);
+}
+
+.onboarding-results__input {
+  --padding-start: var(--ds-space-3);
+  --padding-end: var(--ds-space-3);
+  --padding-top: var(--ds-space-2);
+  --padding-bottom: var(--ds-space-2);
+  border-radius: var(--ds-radius-sm);
+  border: 2px solid var(--ds-border);
+  background: var(--ds-card);
+}
+
+/* Account */
+.onboarding-account__hint {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-text-secondary);
+  margin: 0 0 var(--ds-space-6);
+}
+
+.onboarding-account__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+}
+
+/* Nav buttons */
+.onboarding-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 360px;
+  margin-top: var(--ds-space-6);
+  padding: 0 var(--ds-space-2);
+}
+
+.onboarding-nav__back {
+  font-size: var(--ds-text-base);
+  font-weight: 600;
+  color: var(--ds-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--ds-space-2);
+}
+
+.onboarding-nav__next {
+  min-width: 120px;
+}

@@ -1,47 +1,58 @@
 /* ==========================================================================
    Habit Tracker — component styles
-   Uses the same CSS token names as dashboard.css for consistency.
-   Adds habit-specific tokens with a --habit- prefix.
+   Uses design tokens from designSystem.css (--ds-*, --dash-*, --habit-*)
    ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   Habit accent tokens (soft red / pink — different from teal dashboard accent)
-   -------------------------------------------------------------------------- */
-
-:root {
-  --habit-accent:        #e85d75;
-  --habit-accent-rgb:    232, 93, 117;
-  --habit-accent-muted:  rgba(232, 93, 117, 0.14);
-  --habit-accent-soft:   rgba(232, 93, 117, 0.08);
-
-  --habit-done-bg:       rgba(232, 93, 117, 0.12);
-  --habit-done-border:   #e85d75;
-  --habit-undone-bg:     transparent;
-  --habit-undone-border: rgba(0, 0, 0, 0.18);
-
-  --habit-streak-color:  #ff9f43;
-  --habit-mood-size:     36px;
-
-  --habit-progress-track: rgba(0, 0, 0, 0.08);
-  --habit-progress-fill:  #e85d75;
-}
-
-body.dark {
-  --habit-undone-border: rgba(255, 255, 255, 0.18);
-  --habit-progress-track: rgba(255, 255, 255, 0.1);
-  --habit-done-bg:        rgba(232, 93, 117, 0.18);
-}
 
 /* ==========================================================================
    Habit Tracker Page
    ========================================================================== */
 
+.habit-page-header {
+  display:         flex;
+  align-items:      center;
+  justify-content:  space-between;
+  padding:          var(--ds-space-3) var(--ds-space-4);
+}
+
+.habit-page-title {
+  font-size:    var(--ds-text-xl);
+  font-weight:  var(--ds-weight-extrabold);
+  color:        var(--ds-text);
+  margin:       0;
+}
+
+.habit-section-gap {
+  height: var(--ds-space-3);
+}
+
+.habit-section-gap--sm {
+  height: var(--ds-space-2);
+}
+
+.habit-section-gap--lg {
+  height: var(--ds-space-5);
+}
+
+.habit-loading {
+  display:         flex;
+  justify-content: center;
+  padding:         var(--ds-space-6);
+}
+
+.habit-loading ion-spinner {
+  color: var(--habit-accent);
+}
+
+/* ==========================================================================
+   Page scaffold
+   ========================================================================== */
+
 .habit-page {
-  --ion-background-color: var(--ion-color-light, #f5f5f5);
+  --ion-background-color: var(--ds-background);
 }
 
 body.dark .habit-page {
-  --ion-background-color: #12121c;
+  --ion-background-color: var(--ds-background);
 }
 
 .habit-page-scroll {
@@ -320,19 +331,38 @@ body.dark .habit-page {
   align-items:     center;
   gap:             12px;
   background:      var(--dash-card-bg);
-  border-radius:   16px;
-  padding:         12px 14px;
+  border-radius:   var(--dash-card-radius, 24px);
+  padding:         14px 14px;
   margin-bottom:   8px;
   border:          1px solid var(--dash-card-border);
-  box-shadow:      0 1px 6px rgba(0, 0, 0, 0.05);
+  box-shadow:      var(--dash-card-shadow);
   cursor:          pointer;
-  transition:      background 0.15s;
+  transition:      background 0.2s, border-color 0.2s;
   -webkit-tap-highlight-color: transparent;
   position:        relative;
 }
 
 .habit-card:active {
-  background: var(--habit-accent-soft);
+  opacity: 0.85;
+}
+
+/* Done state: Figma uses dark background with light text */
+.habit-card--done {
+  background:   var(--dash-text-primary);
+  border-color: var(--dash-text-primary);
+}
+
+.habit-card--done .habit-card__name {
+  color:           var(--dash-card-bg);
+  text-decoration: none;
+}
+
+.habit-card--done .habit-card__category {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+body.dark .habit-card--done .habit-card__category {
+  color: rgba(0, 0, 0, 0.45);
 }
 
 .habit-card__icon-wrap {
@@ -367,8 +397,7 @@ body.dark .habit-page {
 }
 
 .habit-card__name--done {
-  text-decoration: line-through;
-  color:           var(--dash-text-secondary);
+  color: var(--dash-card-bg);
 }
 
 .habit-card__meta {
@@ -492,14 +521,14 @@ body.dark .habit-page {
   width:           54px;
   height:          54px;
   border-radius:   50%;
-  background:      var(--habit-accent);
-  color:           #fff;
+  background:      var(--dash-text-primary);
+  color:           var(--dash-card-bg);
   border:          none;
   font-size:       26px;
   display:         flex;
   align-items:     center;
   justify-content: center;
-  box-shadow:      0 4px 20px rgba(232, 93, 117, 0.45);
+  box-shadow:      0 4px 24px rgba(0, 0, 0, 0.28);
   cursor:          pointer;
   z-index:         100;
   transition:      transform 0.15s, box-shadow 0.15s;
@@ -508,7 +537,7 @@ body.dark .habit-page {
 
 .habit-fab:active {
   transform:  scale(0.92);
-  box-shadow: 0 2px 10px rgba(232, 93, 117, 0.3);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* ==========================================================================

@@ -122,6 +122,22 @@ export function getExercises(params = {}) {
 }
 
 // ---------------------------------------------------------------------------
+// Barcode lookup
+// ---------------------------------------------------------------------------
+
+/**
+ * Look up a food by barcode via the FatSecret proxy.
+ * Returns the raw proxy response: { food: { food_id, food_name, servings... } }
+ * or null-ish when not found.
+ *
+ * @param {string} barcode  EAN-13 / UPC barcode string
+ */
+export function getFoodByBarcode(barcode) {
+  const params = new URLSearchParams({ code: String(barcode) });
+  return httpClient(`/api/fatsecret/barcode?${params}`);
+}
+
+// ---------------------------------------------------------------------------
 // Calories burned calculator
 // ---------------------------------------------------------------------------
 

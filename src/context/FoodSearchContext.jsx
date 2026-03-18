@@ -9,15 +9,19 @@ import {
 import { collection, getDocs, limit, orderBy, query, startAt, endAt, where } from 'firebase/firestore';
 import { db } from '../firebase/config.js';
 import { useAppContext } from './AppContext.jsx';
-import { searchProducts  as offSearch       } from '../services/api/openFoodFacts.js';
-import { searchFoods     as usdaSearch      } from '../services/api/usda.js';
-import { searchFoods     as fatSecretSearch } from '../services/api/fatSecret.js';
-import { getProductByBarcode as offBarcode  } from '../services/api/openFoodFacts.js';
+import { searchProducts  as offSearch   } from '../services/api/openFoodFacts.js';
+import { searchFoods     as usdaSearch  } from '../services/api/usda.js';
+import { getProductByBarcode as offBarcode } from '../services/api/openFoodFacts.js';
+// FatSecret v3 — primary food source
+import { searchFoods as fatsecretSearchV3, getFoodByBarcode as fatsecretBarcode } from '../services/fatsecret/fatsecretApi.js';
+import {
+  normalizeFoodSearchResponse,
+  normalizeFSFood,
+} from '../services/fatsecret/normalizeFatSecret.js';
 import {
   normalizeOFFSearchResults,
   normalizeOFFProduct,
   normalizeUSDASearchResults,
-  normalizeFatSecretSearchResults,
   normalizeFirestoreFood,
   deduplicateFoods,
 } from '../services/api/normalizeFood.js';
@@ -106,40 +110,58 @@ async function queryFirestore(term, uid) {
   return results;
 }
 // ---------------------------------------------------------------------------
-// External API fallback — all three providers in parallel
+// External API query — FatSecret v3 first; fall back to OFF + USDA
 // ---------------------------------------------------------------------------
 /**
+ * FatSecret is the primary source. OFF and USDA are used only when FatSecret
+ * returns zero results or throws (e.g. not configured in dev).
+ *
  * @param {string} term
- * @param {number} page
+ * @param {number} page  1-indexed (as used in FoodSearchContext)
  * @returns {Promise<{ foods: NormalizedFood[], hasMore: boolean, errors: string[] }>}
  */
 async function queryExternalAPIs(term, page) {
-  const [offResult, usdaResult, fsResult] = await Promise.allSettled([
+  // FatSecret uses 0-indexed pages; FoodSearchContext uses 1-indexed
+  const fsPage = page > 1 ? page - 1 : 0;
+
+  // --- Primary: FatSecret v3 ---
+  let fsFailed = false;
+  try {
+    const fsResponse = await fatsecretSearchV3({ q: term, page: fsPage });
+    const parsed     = normalizeFoodSearchResponse(fsResponse);
+    if (parsed.items.length > 0) {
+      // Ensure externalId is populated (v3 normalizer uses "providerId")
+      const foods = parsed.items.map((f) => ({
+        ...f,
+        externalId: f.providerId ?? f.externalId ?? '',
+      }));
+      return { foods, hasMore: parsed.hasMore, errors: [] };
+    }
+    // FatSecret responded but returned 0 results — fall through to fallback
+  } catch (err) {
+    fsFailed = true;
+    console.warn('[FoodSearch] FatSecret v3 failed, trying fallback providers:', err.message);
+  }
+
+  // --- Fallback: OFF + USDA in parallel ---
+  const errors = fsFailed ? ['fatsecret'] : [];
+  const [offResult, usdaResult] = await Promise.allSettled([
     offSearch(term, page).then(normalizeOFFSearchResults),
     usdaSearch(term, page).then(normalizeUSDASearchResults),
-    fatSecretSearch(term, page > 1 ? page - 1 : 0).then(normalizeFatSecretSearchResults),
   ]);
-  const foods  = [];
-  const errors = [];
-  if (offResult.status  === 'fulfilled') {
+  const foods = [];
+  if (offResult.status === 'fulfilled') {
     foods.push(...offResult.value);
   } else {
     errors.push('off');
-    console.warn('[FoodSearch] OpenFoodFacts failed:', offResult.reason?.message ?? offResult.reason);
+    console.warn('[FoodSearch] OpenFoodFacts fallback failed:', offResult.reason?.message ?? offResult.reason);
   }
   if (usdaResult.status === 'fulfilled') {
     foods.push(...usdaResult.value);
   } else {
     errors.push('usda');
-    console.warn('[FoodSearch] USDA failed:', usdaResult.reason?.message ?? usdaResult.reason);
+    console.warn('[FoodSearch] USDA fallback failed:', usdaResult.reason?.message ?? usdaResult.reason);
   }
-  if (fsResult.status   === 'fulfilled') {
-    foods.push(...fsResult.value);
-  } else {
-    errors.push('fatsecret');
-    console.warn('[FoodSearch] FatSecret failed:', fsResult.reason?.message ?? fsResult.reason);
-  }
-  // hasMore: conservative — assume more if any provider returned results
   const hasMore = foods.length >= 15;
   return { foods, hasMore, errors };
 }
@@ -198,10 +220,13 @@ export function FoodSearchProvider({ children }) {
           : merged;
         setResults(finalList);
         setHasMore(externalHasMore);
-        // Surface a network error only when ALL providers failed and there are zero results.
-        // If at least one provider returned food (or Firestore had results) the user
-        // still sees data, so we stay silent about the partial failures.
-        const allExternalFailed = externalErrors.length === 3; // off + usda + fatsecret
+        // Surface a network error only when ALL providers failed AND there are zero results.
+        // FatSecret is primary; OFF + USDA are fallbacks. All three must fail before
+        // we show the generic error. Partial failures are logged as warnings.
+        const allExternalFailed =
+          externalErrors.includes('fatsecret') &&
+          externalErrors.includes('off') &&
+          externalErrors.includes('usda');
         if (allExternalFailed && externalFoods.length === 0 && firestoreResults.length === 0) {
           setError('errors.api.network');
         }
@@ -255,7 +280,21 @@ export function FoodSearchProvider({ children }) {
         setResults([firestoreMatch]);
         return firestoreMatch;
       }
-      // 2. Fallback to OpenFoodFacts (primary barcode DB)
+      // 2. FatSecret barcode lookup (primary external source)
+      try {
+        const fsRaw = await fatsecretBarcode(barcode);
+        // FatSecret returns { food: { food_id, food_name, servings... } }
+        const fsNorm = normalizeFSFood(fsRaw?.food);
+        if (fsNorm) {
+          const food = { ...fsNorm, externalId: fsNorm.providerId ?? '' };
+          setResults([food]);
+          return food;
+        }
+      } catch {
+        // FatSecret barcode lookup failed or returned nothing — fall through to OFF
+        console.warn('[FoodSearch] FatSecret barcode lookup failed for', barcode);
+      }
+      // 3. OpenFoodFacts barcode (fallback)
       const raw        = await offBarcode(barcode);
       const normalized = normalizeOFFProduct(raw?.product);
       if (!normalized) {

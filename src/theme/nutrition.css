@@ -1,0 +1,129 @@
+/* ==========================================================================
+   Nutrition pages — Food Log, Recipes
+   Uses design tokens from designSystem.css
+   ========================================================================== */
+
+.nutrition-food-log-page ion-content,
+.nutrition-recipes-page ion-content {
+  --background: var(--ds-background);
+}
+
+/* Segmented nav */
+.nutrition-segmented-nav {
+  display: flex;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-2) var(--ds-space-4);
+  background: var(--ds-background);
+}
+
+.nutrition-segmented-btn {
+  flex: 1;
+  padding: var(--ds-space-2) var(--ds-space-3);
+  border-radius: var(--ds-radius-md);
+  border: 2px solid var(--ds-border);
+  background: var(--ds-card);
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nutrition-segmented-btn--active {
+  border-color: var(--ds-primary);
+  background: var(--ds-primary);
+  color: var(--ds-primary-foreground);
+}
+
+/* Food Log header */
+.nutrition-food-log-header {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-2) var(--ds-space-4);
+}
+
+.nutrition-back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ds-radius-md);
+  border: none;
+  background: var(--ds-card);
+  color: var(--ds-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.nutrition-food-log-title {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+  margin: 0;
+}
+
+/* Food Log summary */
+.nutrition-food-log-summary {
+  margin-bottom: var(--ds-space-4);
+}
+
+.nutrition-food-log-date {
+  font-size: var(--ds-text-base);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text);
+  margin: 0 0 var(--ds-space-1);
+}
+
+.nutrition-food-log-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nutrition-stat {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-text-secondary);
+}
+
+/* Meal entries */
+.nutrition-meal-entries {
+  padding: var(--ds-space-2) 0;
+}
+
+.nutrition-meal-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--ds-space-2) 0;
+  border-bottom: 1px solid var(--ds-border);
+}
+
+.nutrition-meal-entry:last-of-type {
+  border-bottom: none;
+}
+
+.nutrition-meal-entry-name {
+  font-size: var(--ds-text-base);
+  font-weight: var(--ds-weight-medium);
+  color: var(--ds-text);
+}
+
+.nutrition-meal-entry-kcal {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text-secondary);
+}
+
+.nutrition-meal-subtotal {
+  margin-top: var(--ds-space-2);
+  padding-top: var(--ds-space-2);
+  border-top: 1px solid var(--ds-border);
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-weight-bold);
+  color: var(--ds-text);
+}
+
+.nutrition-add-food-cta {
+  margin-top: var(--ds-space-6);
+}

@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Section Sub-Navigation Popup
+   Appears above the active bottom-nav icon when the user is inside a section.
+   Matches the floating pill style of bottomNav.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Popup card */
+  --sn-bg:            rgba(255, 255, 255, 0.97);
+  --sn-border:        rgba(0, 0, 0, 0.07);
+  --sn-shadow:        0 8px 32px rgba(0, 0, 0, 0.14), 0 2px 8px rgba(0, 0, 0, 0.08);
+  --sn-radius:        22px;
+
+  /* Inactive icon circle */
+  --sn-item-bg:       #f1f1f4;
+  --sn-item-border:   rgba(0, 0, 0, 0.08);
+
+  /* Active icon circle — mirrors --bn-item-active-bg */
+  --sn-item-active-bg: #111111;
+
+  /* Icons */
+  --sn-icon-size:     22px;
+  --sn-icon-color:    rgba(17, 24, 39, 0.55);
+  --sn-icon-active-color: #ffffff;
+
+  /* Labels */
+  --sn-label-color:        rgba(17, 24, 39, 0.55);
+  --sn-label-active-color: #111111;
+}
+
+body.dark {
+  --sn-bg:            rgba(26, 26, 44, 0.98);
+  --sn-border:        rgba(255, 255, 255, 0.09);
+  --sn-shadow:        0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.35);
+
+  --sn-item-bg:       rgba(255, 255, 255, 0.09);
+  --sn-item-border:   rgba(255, 255, 255, 0.1);
+
+  --sn-item-active-bg: rgba(255, 255, 255, 0.92);
+
+  --sn-icon-color:    rgba(255, 255, 255, 0.5);
+  --sn-icon-active-color: #111111;
+
+  --sn-label-color:        rgba(255, 255, 255, 0.5);
+  --sn-label-active-color: rgba(255, 255, 255, 0.95);
+}
+
+/* --------------------------------------------------------------------------
+   Popup root — absolutely positioned inside .bn-wrap
+   -------------------------------------------------------------------------- */
+
+.sn-popup {
+  position: absolute;
+  /* Float above the nav bar; --bn-bar-height is 64px */
+  bottom: calc(var(--bn-bar-height) + 14px);
+  /* left is set via inline CSS variable --sn-anchor-left from the component */
+  left: var(--sn-anchor-left, 10%);
+  transform: translateX(-50%);
+  pointer-events: all;
+  z-index: 1;
+  /* Prevent popup from being clipped by the wrapper's edge */
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Card container
+   -------------------------------------------------------------------------- */
+
+.sn-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 10px 12px 8px;
+  background: var(--sn-bg);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius);
+  box-shadow: var(--sn-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* --------------------------------------------------------------------------
+   Individual sub-tab button
+   -------------------------------------------------------------------------- */
+
+.sn-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 54px;
+}
+
+.sn-item:active .sn-icon-wrap {
+  transform: scale(0.9);
+}
+
+/* --------------------------------------------------------------------------
+   Icon circle
+   -------------------------------------------------------------------------- */
+
+.sn-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--sn-item-bg);
+  border: 1.5px solid var(--sn-item-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.15s ease;
+}
+
+.sn-item.sn-active .sn-icon-wrap {
+  background: var(--sn-item-active-bg);
+  border-color: transparent;
+}
+
+.sn-icon-wrap ion-icon {
+  font-size: var(--sn-icon-size);
+  color: var(--sn-icon-color);
+  pointer-events: none;
+  display: block;
+}
+
+.sn-item.sn-active .sn-icon-wrap ion-icon {
+  color: var(--sn-icon-active-color);
+}
+
+/* --------------------------------------------------------------------------
+   Label
+   -------------------------------------------------------------------------- */
+
+.sn-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--sn-label-color);
+  transition: color 0.18s ease;
+  user-select: none;
+}
+
+.sn-item.sn-active .sn-label {
+  color: var(--sn-label-active-color);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — tiny phones
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  .sn-icon-wrap {
+    width: 46px;
+    height: 46px;
+  }
+
+  .sn-item {
+    min-width: 48px;
+  }
+
+  :root {
+    --sn-icon-size: 19px;
+  }
+}

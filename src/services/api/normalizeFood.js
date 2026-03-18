@@ -275,7 +275,8 @@ export function normalizeFirestoreFood(id, data, source = 'internal') {
  * @returns {NormalizedFood[]}
  */
 export function deduplicateFoods(foods) {
-  const SOURCE_PRIORITY = { internal: 0, off: 1, usda: 2, fatsecret: 3, user: 4 };
+  // FatSecret is the primary external source — it takes priority over OFF and USDA
+  const SOURCE_PRIORITY = { internal: 0, fatsecret: 1, off: 2, usda: 3, user: 4 };
   // Dedupe by barcode
   const byBarcode = new Map();
   const noBarcode = [];

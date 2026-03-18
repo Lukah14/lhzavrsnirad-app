@@ -33,6 +33,8 @@
     },
     "meals": {
       "title": "Prehrana",
+      "todaysMeals": "Današnji obroci",
+      "fullLog": "Cijeli dnevnik",
       "more": "Više",
       "breakfast": "Doručak",
       "lunch": "Ručak",

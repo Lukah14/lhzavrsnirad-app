@@ -40,7 +40,7 @@ async function getAccessToken() {
       Authorization:  `Basic ${credentials}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: 'grant_type=client_credentials&scope=basic',
+    body: 'grant_type=client_credentials&scope=premier',
   });
   if (!res.ok) {
     const body = await res.text().catch(() => '');
@@ -157,6 +157,24 @@ async function getFoodBrands(startsWithLetter, page = 0) {
 // ---------------------------------------------------------------------------
 async function getFoodCategories() {
   return fetchWithToken(`${FS_API_BASE}/food_sub_categories?format=json`);
+}
+
+// ---------------------------------------------------------------------------
+// Barcode lookup
+// ---------------------------------------------------------------------------
+/**
+ * Look up a food by barcode value.
+ * FatSecret endpoint: GET /rest/foods/find_by_barcode.get?barcode_value=&format=json
+ *
+ * @param {string} barcode  EAN-13 / UPC barcode string
+ * @returns {Promise<object>}  Raw FatSecret response: { food: { ... } }
+ */
+async function findByBarcode(barcode) {
+  const params = new URLSearchParams({
+    barcode_value: String(barcode),
+    format:        'json',
+  });
+  return fetchWithToken(`${FS_API_BASE}/foods/find_by_barcode.get?${params}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -285,6 +303,8 @@ module.exports = {
   searchFoodsExtended,
   getFoodBrands,
   getFoodCategories,
+  // barcode
+  findByBarcode,
   // recipes
   searchRecipes,
   getRecipeTypes,

@@ -33,6 +33,8 @@
     },
     "meals": {
       "title": "Nutrition",
+      "todaysMeals": "Today's Meals",
+      "fullLog": "Full log",
       "more": "More",
       "breakfast": "Breakfast",
       "lunch": "Lunch",

@@ -40,7 +40,7 @@ async function getFsToken() {
       Authorization:  `Basic ${creds}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: 'grant_type=client_credentials&scope=basic',
+    body: 'grant_type=client_credentials&scope=premier',
   })
   if (!res.ok) {
     const body = await res.text().catch(() => '')
@@ -199,6 +199,17 @@ export function apiProxy() {
             })
             if (q.get('startsWithLetter')) p.set('starts_with', q.get('startsWithLetter').charAt(0))
             const data = await fsGet(`/food_brands?${p}`)
+            return jsonReply(res, 200, data)
+          }
+
+          // ----------------------------------------------------------------
+          // FatSecret — barcode lookup (primary barcode source)
+          // GET /api/fatsecret/barcode?code=xxx
+          // ----------------------------------------------------------------
+          if (path === '/api/fatsecret/barcode' && req.method === 'GET') {
+            const code = q.get('code') ?? ''
+            if (!code) return jsonReply(res, 400, { code: 'MISSING_PARAM', message: 'code is required', status: 400 })
+            const data = await fsGet(`/rest/foods/find_by_barcode.get?format=json&barcode_value=${encodeURIComponent(code)}`)
             return jsonReply(res, 200, data)
           }
 

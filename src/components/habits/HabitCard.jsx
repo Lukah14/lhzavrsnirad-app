@@ -84,7 +84,7 @@ const HabitCard = memo(function HabitCard({ habit, date, onOpenDetail }) {
 
   return (
     <div
-      className="habit-card"
+      className={`habit-card${done ? ' habit-card--done' : ''}`}
       onClick={handleCardClick}
       role="listitem"
       aria-label={habit.name}

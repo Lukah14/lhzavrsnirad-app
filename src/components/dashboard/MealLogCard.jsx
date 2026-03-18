@@ -1,9 +1,10 @@
 import { memo, useCallback } from 'react';
 import { IonIcon } from '@ionic/react';
-import { addOutline, chevronForwardOutline } from 'ionicons/icons';
+import { addOutline, sunnyOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { MEAL_ICONS } from '../../models/dashboard';
+import DesignEmptyState from '../ui/DesignEmptyState';
 
 // ---------------------------------------------------------------------------
 // Single meal row
@@ -45,9 +46,13 @@ const MealRow = memo(function MealRow({ meal, selectedDate, mealLabel }) {
 
   return (
     <div className="meal-row" onClick={goToMealDetail} role="button" tabIndex={0}>
-      {/* Icon */}
+      {/* Icon — sun for breakfast (Figma target), emoji for others */}
       <div className="meal-icon" aria-hidden="true">
-        {MEAL_ICONS[mealType]}
+        {mealType === 'breakfast' ? (
+          <IonIcon icon={sunnyOutline} className="meal-icon-ion" />
+        ) : (
+          MEAL_ICONS[mealType]
+        )}
       </div>
 
       {/* Info */}
@@ -55,15 +60,6 @@ const MealRow = memo(function MealRow({ meal, selectedDate, mealLabel }) {
         <span className="meal-name">{mealLabel}</span>
         {hasItems ? (
           <>
-            <div className="meal-meta">
-              {t('dashboard.meals.subtotalKcal', { kcal: Math.round(subtotal.kcal) })}
-              {' · '}
-              {t('dashboard.meals.macroShort', {
-                p: Math.round(subtotal.p),
-                c: Math.round(subtotal.c),
-                f: Math.round(subtotal.f),
-              })}
-            </div>
             {previewNames && (
               <div className="meal-items-preview">{previewNames}</div>
             )}
@@ -75,9 +71,9 @@ const MealRow = memo(function MealRow({ meal, selectedDate, mealLabel }) {
         )}
       </div>
 
-      {/* Right side: kcal + add button */}
+      {/* Right side: kcal (target: "Breakfast" + "415 kcal" layout) + add button */}
       {hasItems && (
-        <span className="meal-kcal">{Math.round(subtotal.kcal)}</span>
+        <span className="meal-kcal">{Math.round(subtotal.kcal)} kcal</span>
       )}
 
       <button
@@ -112,18 +108,29 @@ const MealLogCard = memo(function MealLogCard({ meals, selectedDate }) {
     snack:     t('dashboard.meals.snack'),
   };
 
+  const allEmpty = meals.every((m) => !m.itemsPreview?.length);
+
   return (
     <div className="dash-card">
       <div className="dash-card-header">
-        <h2 className="dash-card-title">{t('dashboard.meals.title')}</h2>
+        <h2 className="dash-card-title">{t('dashboard.meals.todaysMeals')}</h2>
         <button
           className="dash-card-action"
           onClick={() => history.push(`/nutrition/food-log?date=${selectedDate}`)}
         >
-          {t('dashboard.meals.more')}
+          {t('dashboard.meals.fullLog')} &gt;
         </button>
       </div>
 
+      {allEmpty ? (
+        <DesignEmptyState
+          icon="🍽️"
+          title={t('dashboard.meals.noItems')}
+          hint={t('dashboard.meals.tapToAdd')}
+          ctaLabel={t('dashboard.meals.addFood')}
+          onCtaClick={() => history.push(`/nutrition/search?mealType=breakfast&date=${selectedDate}`)}
+        />
+      ) : (
       <div className="meal-list">
         {meals.map((meal) => (
           <MealRow
@@ -134,6 +141,7 @@ const MealLogCard = memo(function MealLogCard({ meals, selectedDate }) {
           />
         ))}
       </div>
+      )}
     </div>
   );
 });

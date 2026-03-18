@@ -34,11 +34,20 @@ async function fetchDashboardData(_uid, date) {
   // Simulate network latency during development
   await new Promise((r) => setTimeout(r, 600));
 
+  // Use stored goals from onboarding when available
+  let storedGoals = null;
+  try {
+    const raw = localStorage.getItem('makrion_goals');
+    if (raw) storedGoals = JSON.parse(raw);
+  } catch (_) {}
+
   // Return mock data only for "today", empty for other dates
   const todayStr = today();
-  if (date === todayStr) return createMockDashboardData(date);
-
-  return {
+  let result;
+  if (date === todayStr) {
+    result = createMockDashboardData(date);
+  } else {
+    result = {
     selectedDate: date,
     goals: EMPTY_GOALS,
     totals: EMPTY_TOTALS,
@@ -46,6 +55,12 @@ async function fetchDashboardData(_uid, date) {
     habits: [],
     progressSnapshot: EMPTY_PROGRESS_SNAPSHOT,
   };
+  }
+
+  if (storedGoals) {
+    result = { ...result, goals: storedGoals };
+  }
+  return result;
 }
 
 // ---------------------------------------------------------------------------

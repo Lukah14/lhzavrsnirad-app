@@ -15,7 +15,7 @@ const WaterCard = memo(function WaterCard({ waterMl, waterMlGoal, onAdd }) {
   const { t } = useTranslation();
 
   const ratio = calcRatio(waterMl, waterMlGoal);
-  const currentL = (waterMl / 1000).toFixed(2);
+  const currentL = (waterMl / 1000).toFixed(1);
   const goalL    = (waterMlGoal / 1000).toFixed(1);
 
   const handleAdd = useCallback(
@@ -28,26 +28,24 @@ const WaterCard = memo(function WaterCard({ waterMl, waterMlGoal, onAdd }) {
   return (
     <div className="dash-card">
       <div className="dash-card-header">
-        <h2 className="dash-card-title">{t('dashboard.water.title')}</h2>
-        <span className="dash-card-action" style={{ cursor: 'default', color: 'var(--dash-text-secondary)' }}>
-          {t('dashboard.water.goalLabel', { value: goalL })}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 18 }}>💧</span>
+          <h2 className="dash-card-title">{t('dashboard.water.title')}</h2>
+        </div>
+        <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--dash-water-color)' }}>
+          {currentL}L / {goalL}L
         </span>
       </div>
 
       <div className="water-content">
-        {/* Amount display */}
-        <div className="water-amount-row">
-          <span className="water-current">
-            {currentL}
-            <sup>{t('common.l')}</sup>
-          </span>
-          {waterMl === 0 && (
-            <span className="water-goal-label">{t('dashboard.water.noWater')}</span>
-          )}
-        </div>
-
         {/* Progress bar */}
-        <div className="water-track" role="progressbar" aria-valuenow={waterMl} aria-valuemax={waterMlGoal}>
+        <div
+          className="water-track"
+          role="progressbar"
+          aria-valuenow={waterMl}
+          aria-valuemax={waterMlGoal}
+          style={{ marginBottom: 16 }}
+        >
           <div
             className="water-track-fill"
             style={{ width: `${ratio * 100}%` }}
@@ -63,7 +61,7 @@ const WaterCard = memo(function WaterCard({ waterMl, waterMlGoal, onAdd }) {
               onClick={() => handleAdd(ml)}
               aria-label={`Add ${ml} ml water`}
             >
-              {t(`dashboard.water.add${ml}`)}
+              +{ml}ml
             </button>
           ))}
         </div>

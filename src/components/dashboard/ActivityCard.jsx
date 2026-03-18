@@ -1,6 +1,4 @@
 import { memo, useCallback } from 'react';
-import { IonIcon } from '@ionic/react';
-import { barbellOutline, walkOutline, fitnessOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
@@ -10,6 +8,13 @@ const PRESETS = [
   { key: 'walk', minutes: 30, kcal: 150 },
   { key: 'gym',  minutes: 60, kcal: 350 },
 ];
+
+// Stat tile definitions for the Figma-style activity card
+const STAT_ICONS = {
+  burned:  { emoji: '🔥', color: '#FF9F43' },
+  minutes: { emoji: '⏱',  color: '#34D399' },
+  steps:   { emoji: '👟', color: '#5B9CF6' },
+};
 
 /**
  * @param {{
@@ -36,6 +41,12 @@ const ActivityCard = memo(function ActivityCard({ totals, selectedDate }) {
     [addQuickWorkout, selectedDate]
   );
 
+  const stats = [
+    { key: 'burned',  value: burnedKcal,      unit: 'kcal',    label: 'Burned',  ...STAT_ICONS.burned },
+    { key: 'minutes', value: workoutsMinutes,  unit: 'min',     label: 'Active',  ...STAT_ICONS.minutes },
+    { key: 'steps',   value: '—',              unit: '',        label: 'Steps',   ...STAT_ICONS.steps },
+  ];
+
   return (
     <div className="dash-card">
       <div className="dash-card-header">
@@ -48,36 +59,38 @@ const ActivityCard = memo(function ActivityCard({ totals, selectedDate }) {
         </button>
       </div>
 
-      {hasActivity ? (
-        <div className="activity-stats-row">
-          {/* Workouts */}
-          <div className="activity-stat-pill">
-            <span className="activity-stat-pill-value">{workoutsCount}</span>
-            <span className="activity-stat-pill-label">
-              {t('dashboard.activity.workoutCount_one', { count: workoutsCount })}
+      <div className="activity-stats-row">
+        {stats.map((stat) => (
+          <div key={stat.key} className="activity-stat-pill">
+            <span style={{ fontSize: 20, display: 'block', marginBottom: 4 }}>{stat.emoji}</span>
+            <span className="activity-stat-pill-value" style={{ color: stat.color }}>
+              {stat.value}
+              {stat.unit && (
+                <span style={{ fontSize: 11, fontWeight: 500, color: 'var(--dash-text-secondary)', marginLeft: 1 }}>
+                  {stat.unit}
+                </span>
+              )}
             </span>
+            <span className="activity-stat-pill-label">{stat.label}</span>
           </div>
+        ))}
+      </div>
 
-          {/* Duration */}
-          <div className="activity-stat-pill">
-            <span className="activity-stat-pill-value">{workoutsMinutes}</span>
-            <span className="activity-stat-pill-label">{t('common.min')}</span>
-          </div>
-
-          {/* Burned */}
-          <div className="activity-stat-pill">
-            <span className="activity-stat-pill-value" style={{ color: 'var(--dash-carbs-color)' }}>
-              {burnedKcal}
-            </span>
-            <span className="activity-stat-pill-label">{t('common.kcal')}</span>
-          </div>
+      {/* Step-goal progress bar */}
+      <div style={{ padding: '4px 16px 14px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+          <span style={{ fontSize: 12, color: 'var(--dash-text-secondary)' }}>Step goal progress</span>
+          <span style={{ fontSize: 12, fontWeight: 600, color: '#34D399' }}>—</span>
         </div>
-      ) : (
-        <div className="activity-empty">
-          <p className="activity-empty-title">{t('dashboard.activity.noActivity')}</p>
-          <p className="activity-empty-hint">{t('dashboard.activity.noActivityHint')}</p>
+        <div style={{ height: 8, background: 'var(--dash-track-color)', borderRadius: 4, overflow: 'hidden' }}>
+          <div style={{
+            height: '100%', borderRadius: 4,
+            background: 'linear-gradient(90deg, #34D399, #059669)',
+            width: hasActivity ? '40%' : '0%',
+            transition: 'width 0.5s ease',
+          }} />
         </div>
-      )}
+      </div>
 
       {/* Actions */}
       <div className="activity-actions">

@@ -104,25 +104,43 @@ const NutritionSummaryCard = memo(function NutritionSummaryCard({ goals, totals 
     },
   ], [t, goals, totals]);
 
+  const breakdown = useMemo(() => [
+    { label: 'Goal',   value: Math.round(goals.caloriesGoal).toLocaleString() },
+    { label: 'Eaten',  value: Math.round(totals.consumedKcal).toLocaleString() },
+    { label: 'Burned', value: Math.round(totals.burnedKcal ?? 0).toLocaleString() },
+  ], [goals, totals]);
+
   return (
     <>
       {/* ── Calorie hero card ── */}
       <div className="calorie-hero-card">
-        <div className="calorie-hero-left">
-          <div className="calorie-hero-number">
-            {Math.max(0, Math.round(remaining)).toLocaleString()}
+        <div className="calorie-hero-top">
+          <div className="calorie-hero-left">
+            <div className="calorie-hero-number">
+              {Math.max(0, Math.round(remaining)).toLocaleString()}
+            </div>
+            <div className="calorie-hero-label">
+              {t('dashboard.summary.caloriesLeft')}
+            </div>
           </div>
-          <div className="calorie-hero-label">
-            {t('dashboard.summary.caloriesLeft')}
+
+          <div className="calorie-circle-wrap">
+            <CalorieCircle
+              consumed={totals.consumedKcal}
+              goal={goals.caloriesGoal}
+            />
+            <span className="calorie-circle-icon" aria-hidden="true">🔥</span>
           </div>
         </div>
 
-        <div className="calorie-circle-wrap">
-          <CalorieCircle
-            consumed={totals.consumedKcal}
-            goal={goals.caloriesGoal}
-          />
-          <span className="calorie-circle-icon" aria-hidden="true">🔥</span>
+        {/* Goal / Eaten / Burned breakdown row */}
+        <div className="calorie-breakdown-row">
+          {breakdown.map((item) => (
+            <div key={item.label} className="calorie-breakdown-item">
+              <span className="calorie-breakdown-value">{item.value}</span>
+              <span className="calorie-breakdown-label">{item.label}</span>
+            </div>
+          ))}
         </div>
       </div>
 

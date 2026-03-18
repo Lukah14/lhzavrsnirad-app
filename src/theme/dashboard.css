@@ -1,103 +1,18 @@
 /* ==========================================================================
-   Dashboard — CSS custom properties + component styles
-   Modern minimal, dark/light compatible, mobile-first
+   Dashboard — component styles
+   Uses design tokens from designSystem.css (--ds-* / --dash-* aliases)
    ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   Design tokens
-   -------------------------------------------------------------------------- */
-
-:root {
-  /* Brand accent */
-  --dash-accent: #00d4aa;
-  --dash-accent-rgb: 0, 212, 170;
-  --dash-accent-muted: rgba(0, 212, 170, 0.15);
-
-  /* Macro colours */
-  --dash-protein-color: #ff6b6b;
-  --dash-carbs-color: #ffa94d;
-  --dash-fat-color: #74c0fc;
-
-  /* Surface */
-  --dash-card-bg: #ffffff;
-  --dash-card-border: rgba(0, 0, 0, 0.06);
-  --dash-card-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
-  --dash-card-radius: 18px;
-  --dash-track-color: rgba(0, 0, 0, 0.08);
-
-  /* Typography */
-  --dash-text-primary: #111827;
-  --dash-text-secondary: rgba(17, 24, 39, 0.55);
-  --dash-text-muted: rgba(17, 24, 39, 0.35);
-
-  /* Layout */
-  --dash-page-h-pad: 16px;
-  --dash-section-gap: 12px;
-
-  /* Progress fill backgrounds */
-  --dash-protein-bg: rgba(255, 107, 107, 0.15);
-  --dash-carbs-bg: rgba(255, 169, 77, 0.15);
-  --dash-fat-bg: rgba(116, 192, 252, 0.15);
-
-  /* Habit toggle */
-  --dash-habit-done-bg: rgba(0, 212, 170, 0.15);
-  --dash-habit-done-border: var(--dash-accent);
-  --dash-habit-undone-bg: transparent;
-  --dash-habit-undone-border: rgba(0, 0, 0, 0.2);
-
-  /* Skeleton shimmer */
-  --dash-skeleton-base: rgba(0, 0, 0, 0.06);
-  --dash-skeleton-highlight: rgba(0, 0, 0, 0.12);
-
-  /* Section title */
-  --dash-section-title-size: 17px;
-  --dash-section-title-weight: 700;
-}
-
-/* Dark mode overrides */
-body.dark {
-  --dash-card-bg: #1c1c2e;
-  --dash-card-border: rgba(255, 255, 255, 0.06);
-  --dash-card-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
-  --dash-track-color: rgba(255, 255, 255, 0.1);
-
-  --dash-text-primary: #f0f0f8;
-  --dash-text-secondary: rgba(240, 240, 248, 0.55);
-  --dash-text-muted: rgba(240, 240, 248, 0.35);
-
-  --dash-protein-bg: rgba(255, 107, 107, 0.12);
-  --dash-carbs-bg: rgba(255, 169, 77, 0.12);
-  --dash-fat-bg: rgba(116, 192, 252, 0.12);
-
-  --dash-habit-undone-border: rgba(255, 255, 255, 0.2);
-
-  --dash-skeleton-base: rgba(255, 255, 255, 0.05);
-  --dash-skeleton-highlight: rgba(255, 255, 255, 0.1);
-}
 
 /* ==========================================================================
    Page scaffold
    ========================================================================== */
 
 .home-page ion-content {
-  --background: transparent;
+  --background: var(--dash-page-bg);
 }
 
-/* Gradient blob background layer behind all content */
-.home-page ion-content::part(background) {
-  background:
-    radial-gradient(ellipse 70% 50% at 10% 5%, rgba(0, 212, 170, 0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 85%, rgba(116, 192, 252, 0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 75% 20%, rgba(168, 130, 252, 0.10) 0%, transparent 55%),
-    #f0f2f8;
-}
-
-body.dark .home-page ion-content::part(background) {
-  background:
-    radial-gradient(ellipse 70% 50% at 10% 5%, rgba(0, 212, 170, 0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 85%, rgba(116, 192, 252, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 75% 20%, rgba(168, 130, 252, 0.08) 0%, transparent 55%),
-    #0f0f1a;
+body.dark .home-page ion-content {
+  --background: var(--dash-page-bg);
 }
 
 .home-scroll-content {
@@ -366,6 +281,11 @@ body.dark .home-page ion-content::part(background) {
   flex-shrink: 0;
 }
 
+.meal-icon .meal-icon-ion {
+  font-size: 20px;
+  color: var(--dash-text-primary);
+}
+
 .meal-info {
   flex: 1;
   min-width: 0;
@@ -440,17 +360,18 @@ body.dark .home-page ion-content::part(background) {
 .activity-stat-pill {
   flex: 1;
   background: var(--dash-track-color);
-  border-radius: 12px;
-  padding: 10px 12px;
+  border-radius: 16px;
+  padding: 12px 10px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   gap: 2px;
 }
 
 .activity-stat-pill-value {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--dash-text-primary);
   line-height: 1;
 }
@@ -471,10 +392,10 @@ body.dark .home-page ion-content::part(background) {
 .activity-btn-primary {
   flex: 1;
   min-width: 120px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--dash-accent);
-  color: #fff;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--dash-text-primary);
+  color: var(--dash-card-bg);
   font-size: 14px;
   font-weight: 600;
   border: none;
@@ -488,8 +409,8 @@ body.dark .home-page ion-content::part(background) {
 }
 
 .activity-btn-preset {
-  height: 40px;
-  border-radius: 12px;
+  height: 42px;
+  border-radius: 14px;
   background: var(--dash-track-color);
   color: var(--dash-text-primary);
   font-size: 13px;
@@ -672,7 +593,7 @@ body.dark .home-page ion-content::part(background) {
 .water-track-fill {
   height: 100%;
   border-radius: 4px;
-  background: linear-gradient(90deg, #74c0fc, #4dabf7);
+  background: linear-gradient(90deg, var(--dash-water-color), #0EA5E9);
   transition: width 0.5s ease;
 }
 
@@ -683,10 +604,10 @@ body.dark .home-page ion-content::part(background) {
 
 .water-quick-btn {
   flex: 1;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(116, 192, 252, 0.15);
-  color: #4dabf7;
+  height: 40px;
+  border-radius: 14px;
+  background: var(--dash-water-muted);
+  color: var(--dash-water-color);
   font-size: 13px;
   font-weight: 700;
   border: none;
@@ -696,7 +617,7 @@ body.dark .home-page ion-content::part(background) {
 
 .water-quick-btn:active {
   transform: scale(0.95);
-  background: rgba(116, 192, 252, 0.25);
+  background: rgba(34, 211, 238, 0.2);
 }
 
 /* ==========================================================================
@@ -741,8 +662,8 @@ body.dark .home-page ion-content::part(background) {
 }
 
 .progress-delta.loss {
-  background: rgba(0, 212, 170, 0.15);
-  color: var(--dash-accent);
+  background: rgba(52, 211, 153, 0.12);
+  color: #34D399;
 }
 
 .progress-delta.gain {
@@ -846,47 +767,149 @@ body.dark .home-page ion-content::part(background) {
 }
 
 /* ==========================================================================
-   Brand header bar (app name + streak badge)
+   Dashboard header (Figma target: profile + greeting + actions)
    ========================================================================== */
 
-.home-brand-bar {
+.dashboard-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px 2px;
+  padding: var(--ds-space-3) var(--ds-space-4) var(--ds-space-2);
 }
 
-.home-brand-name {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--dash-text-primary);
+.dashboard-header__left {
   display: flex;
   align-items: center;
-  gap: 8px;
-  letter-spacing: -0.3px;
+  gap: var(--ds-space-3);
 }
 
-.home-brand-icon {
-  font-size: 24px;
-  line-height: 1;
+.dashboard-header__avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
 }
 
-.home-streak-badge {
+.dashboard-header__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--ds-track);
+}
+
+.dashboard-header__avatar--placeholder {
   display: flex;
   align-items: center;
-  gap: 5px;
-  background: var(--dash-card-bg);
-  border: 1px solid var(--dash-card-border);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--dash-text-primary);
-  box-shadow: var(--dash-card-shadow);
+  justify-content: center;
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-weight-bold);
+  color: var(--ds-text-secondary);
 }
 
-.home-streak-badge span {
-  font-size: 16px;
+.dashboard-header__online {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ds-success);
+  border: 2px solid var(--ds-card);
+}
+
+.dashboard-header__greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dashboard-header__greeting-text {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-text-secondary);
+  font-weight: var(--ds-weight-medium);
+}
+
+.dashboard-header__name {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+}
+
+.dashboard-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+}
+
+.dashboard-header__icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ds-card);
+  border: 1px solid var(--ds-border);
+  box-shadow: var(--ds-shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dashboard-header__icon-btn ion-icon {
+  font-size: 20px;
+  color: var(--ds-text-secondary);
+}
+
+.dashboard-header__icon-btn:active {
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   Dashboard streak chips (Figma target)
+   ========================================================================== */
+
+.dashboard-streak-chips {
+  display: flex;
+  gap: var(--ds-space-2);
+  padding: 0 var(--ds-space-4) var(--ds-space-3);
+}
+
+.dashboard-streak-chip {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-2) var(--ds-space-3);
+  border-radius: var(--ds-radius-md);
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text);
+}
+
+.dashboard-streak-chip--nutrition {
+  background: var(--ds-chip-nutrition-bg);
+}
+
+.dashboard-streak-chip__icon--nutrition {
+  font-size: 18px;
+  color: var(--ds-chip-nutrition-icon);
+}
+
+.dashboard-streak-chip--activity {
+  background: var(--ds-chip-activity-bg);
+}
+
+.dashboard-streak-chip__icon--activity {
+  font-size: 18px;
+  color: var(--ds-chip-activity-icon);
+}
+
+.dashboard-streak-chip--habits {
+  background: var(--ds-chip-habits-bg);
+}
+
+.dashboard-streak-chip__icon--habits {
+  font-size: 18px;
+  color: var(--ds-chip-habits-icon);
 }
 
 /* ==========================================================================
@@ -896,8 +919,15 @@ body.dark .home-page ion-content::part(background) {
 .week-strip-row {
   display: flex;
   align-items: center;
-  padding: 6px 12px 10px;
+  padding: 4px 12px 8px;
   gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.week-strip-row::-webkit-scrollbar {
+  display: none;
 }
 
 .week-strip {
@@ -911,60 +941,83 @@ body.dark .home-page ion-content::part(background) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  padding: 4px 4px;
-  border-radius: 14px;
+  gap: 4px;
+  padding: 6px 4px;
+  border-radius: 18px;
   border: none;
   background: none;
   cursor: pointer;
-  min-width: 36px;
-  transition: background 0.15s;
+  min-width: 40px;
+  transition: background 0.2s;
   -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
 }
 
 .week-day-letter {
   font-size: 11px;
   font-weight: 500;
-  color: var(--dash-text-muted);
+  color: var(--dash-text-secondary);
   text-transform: uppercase;
 }
 
 .week-day.selected .week-day-letter {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+body.dark .week-day.selected .week-day-letter {
   color: var(--dash-text-primary);
-  font-weight: 700;
 }
 
 .week-day-number {
   font-size: 14px;
   font-weight: 600;
-  color: var(--dash-text-secondary);
-  width: 30px;
-  height: 30px;
+  color: var(--dash-text-primary);
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.2s, color 0.2s;
 }
 
-.week-day.today:not(.selected) .week-day-number {
-  border: 1.5px dashed var(--dash-text-secondary);
+.week-day:not(.selected):not(.future):hover .week-day-number {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+body.dark .week-day:not(.selected):not(.future):hover .week-day-number {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.week-day.today:not(.selected) {
+  border: 2px solid var(--dash-text-primary);
+}
+
+.week-day.selected {
+  background: var(--dash-text-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .week-day.selected .week-day-number {
-  background: var(--dash-text-primary);
-  color: var(--dash-card-bg);
+  background: transparent;
+  color: #ffffff;
 }
 
-.week-day.future .week-day-letter,
-.week-day.future .week-day-number {
-  opacity: 0.4;
+body.dark .week-day.selected .week-day-number {
+  color: var(--dash-page-bg);
+}
+
+.week-day.future {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
 }
 
 .week-strip-cal-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 14px;
   background: var(--dash-card-bg);
   border: 1px solid var(--dash-card-border);
   display: flex;
@@ -973,6 +1026,8 @@ body.dark .home-page ion-content::part(background) {
   cursor: pointer;
   flex-shrink: 0;
   margin-left: 6px;
+  box-shadow: var(--dash-card-shadow);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .week-strip-cal-btn ion-icon {
@@ -990,10 +1045,15 @@ body.dark .home-page ion-content::part(background) {
   background: var(--dash-card-bg);
   border: 1px solid var(--dash-card-border);
   box-shadow: var(--dash-card-shadow);
-  padding: 22px 20px 18px;
+  padding: 20px 20px 0;
+  overflow: hidden;
+}
+
+.calorie-hero-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 .calorie-hero-left {
@@ -1001,11 +1061,11 @@ body.dark .home-page ion-content::part(background) {
 }
 
 .calorie-hero-number {
-  font-size: 54px;
+  font-size: 52px;
   font-weight: 800;
   color: var(--dash-text-primary);
   line-height: 1;
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
 }
 
 .calorie-hero-label {
@@ -1020,8 +1080,8 @@ body.dark .home-page ion-content::part(background) {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 110px;
-  height: 110px;
+  width: 100px;
+  height: 100px;
   flex-shrink: 0;
 }
 
@@ -1029,6 +1089,39 @@ body.dark .home-page ion-content::part(background) {
   position: absolute;
   font-size: 24px;
   pointer-events: none;
+}
+
+/* Calorie breakdown row: Goal | Eaten | Burned */
+.calorie-breakdown-row {
+  display: flex;
+  border-top: 1px solid var(--dash-card-border);
+  margin: 0 -20px;
+}
+
+.calorie-breakdown-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  gap: 3px;
+}
+
+.calorie-breakdown-item + .calorie-breakdown-item {
+  border-left: 1px solid var(--dash-card-border);
+}
+
+.calorie-breakdown-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dash-text-primary);
+  line-height: 1;
+}
+
+.calorie-breakdown-label {
+  font-size: 12px;
+  color: var(--dash-text-secondary);
+  font-weight: 400;
 }
 
 /* ==========================================================================
@@ -1045,9 +1138,9 @@ body.dark .home-page ion-content::part(background) {
   flex: 1;
   background: var(--dash-card-bg);
   border: 1px solid var(--dash-card-border);
-  border-radius: 16px;
+  border-radius: var(--dash-card-radius);
   box-shadow: var(--dash-card-shadow);
-  padding: 14px 10px 12px;
+  padding: 14px 12px 14px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

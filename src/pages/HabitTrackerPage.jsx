@@ -19,6 +19,7 @@ import HabitCard                      from '../components/habits/HabitCard';
 import HabitQuickAddModal             from '../components/habits/HabitQuickAddModal';
 import HabitDetailModal               from '../components/habits/HabitDetailModal';
 import MemorableMomentsSection        from '../components/habits/MemorableMomentsSection';
+import DesignEmptyState               from '../components/ui/DesignEmptyState';
 
 import '../components/habits/habits.css';
 import '../theme/dashboard.css';
@@ -73,10 +74,8 @@ function HabitTrackerPage() {
       {/* ── Sticky header: date navigation ── */}
       <IonHeader translucent>
         <IonToolbar>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px 6px' }}>
-            <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: 'var(--dash-text-primary)' }}>
-              {t('habits.title')}
-            </h1>
+          <div className="habit-page-header">
+            <h1 className="habit-page-title">{t('habits.title')}</h1>
           </div>
         </IonToolbar>
       </IonHeader>
@@ -85,10 +84,8 @@ function HabitTrackerPage() {
         {/* iOS collapsing header mirror */}
         <IonHeader collapse="condense">
           <IonToolbar>
-            <div style={{ padding: '10px 16px 6px' }}>
-              <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: 'var(--dash-text-primary)' }}>
-                {t('habits.title')}
-              </h1>
+            <div className="habit-page-header">
+              <h1 className="habit-page-title">{t('habits.title')}</h1>
             </div>
           </IonToolbar>
         </IonHeader>
@@ -96,11 +93,11 @@ function HabitTrackerPage() {
         {/* ① Date navigation bar */}
         <HabitDateNav />
 
-        <div style={{ height: 12 }} />
+        <div className="habit-section-gap" />
 
         {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: 40 }}>
-            <IonSpinner name="crescent" style={{ color: 'var(--habit-accent)' }} />
+          <div className="habit-loading">
+            <IonSpinner name="crescent" />
           </div>
         ) : (
           <>
@@ -109,7 +106,7 @@ function HabitTrackerPage() {
               <DailyMoodSection />
             </div>
 
-            <div style={{ height: 10 }} />
+            <div className="habit-section-gap habit-section-gap--sm" />
 
             {/* ③ Habit summary bar */}
             <div className="habit-section">
@@ -145,12 +142,12 @@ function HabitTrackerPage() {
               )}
             </div>
 
-            <div style={{ height: 20 }} />
+            <div className="habit-section-gap habit-section-gap--lg" />
 
             {/* ④ Memorable moments */}
             <MemorableMomentsSection />
 
-            <div style={{ height: 20 }} />
+            <div className="habit-section-gap habit-section-gap--lg" />
           </>
         )}
       </IonContent>

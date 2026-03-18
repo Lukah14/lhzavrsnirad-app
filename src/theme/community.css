@@ -1,0 +1,42 @@
+/* Community, Progress pages */
+.community-page ion-content,
+.progress-page ion-content {
+  --background: var(--ds-background);
+}
+
+.community-page-title,
+.progress-page-title {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+  margin: 0;
+  padding: var(--ds-space-2) var(--ds-space-4);
+}
+
+.progress-detail {
+  padding: var(--ds-space-4);
+}
+
+.progress-detail-weight {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-space-1);
+}
+
+.progress-detail-value {
+  font-size: var(--ds-text-3xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+}
+
+.progress-detail-unit {
+  font-size: var(--ds-text-base);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-text-secondary);
+}
+
+.progress-detail-delta {
+  margin: var(--ds-space-2) 0 0;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-text-secondary);
+}

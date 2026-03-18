@@ -6,8 +6,9 @@
 // Routes:
 //   OFF:        GET /api/off/product   GET /api/off/search
 //   USDA:       GET /api/usda/search
-//   FatSecret:  GET /api/fatsecret/foods/search
-//               GET /api/fatsecret/search          (legacy — used by FoodSearchContext)
+//   FatSecret:  GET /api/fatsecret/foods/search     (primary — v3)
+//               GET /api/fatsecret/barcode          (primary barcode lookup)
+//               GET /api/fatsecret/search           (legacy v1 — kept for compatibility)
 //               GET /api/fatsecret/brands
 //               GET /api/fatsecret/categories
 //               GET /api/fatsecret/recipes/search
@@ -165,6 +166,19 @@ app.get('/api/fatsecret/foods/search', async (req, res) => {
       includeSubCategories: includeSubCategories === '1' || includeSubCategories === 'true',
       defaultServing:       defaultServing === '1' || defaultServing === 'true',
     }), TTL.SHORT);
+    return res.json(data);
+  } catch (err) {
+    return sendError(res, err, 'fatsecret', req.requestId);
+  }
+});
+
+// GET /api/fatsecret/barcode?code=  (primary barcode lookup)
+app.get('/api/fatsecret/barcode', async (req, res) => {
+  const { code } = req.query;
+  if (!code) return res.status(400).json({ code: 'MISSING_PARAM', message: 'code is required', provider: 'fatsecret' });
+  const key = `fs:barcode:${code}`;
+  try {
+    const data = await withCache(key, () => fs.findByBarcode(code), TTL.DEFAULT);
     return res.json(data);
   } catch (err) {
     return sendError(res, err, 'fatsecret', req.requestId);

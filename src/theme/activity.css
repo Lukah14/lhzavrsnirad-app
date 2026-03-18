@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Activity pages
+   Uses design tokens from designSystem.css
+   ========================================================================== */
+
+.activity-today-page ion-content,
+.activity-exercises-page ion-content,
+.activity-plans-page ion-content {
+  --background: var(--ds-background);
+}
+
+.activity-page-title {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+  margin: 0;
+  padding: var(--ds-space-2) var(--ds-space-4);
+}
+
+.activity-today-stats {
+  display: flex;
+  gap: var(--ds-space-3);
+  margin-bottom: var(--ds-space-6);
+}
+
+.activity-today-stat {
+  flex: 1;
+  background: var(--ds-card);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  padding: var(--ds-space-4);
+  text-align: center;
+}
+
+.activity-today-stat-value {
+  display: block;
+  font-size: var(--ds-text-2xl);
+  font-weight: var(--ds-weight-extrabold);
+  color: var(--ds-text);
+}
+
+.activity-today-stat-label {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-text-secondary);
+}
+
+.activity-today-content {
+  padding: var(--ds-space-2) 0;
+}
+
+.activity-today-presets {
+  display: flex;
+  gap: var(--ds-space-3);
+  margin: var(--ds-space-4) 0;
+}

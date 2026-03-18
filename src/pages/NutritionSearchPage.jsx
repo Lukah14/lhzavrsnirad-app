@@ -17,8 +17,10 @@ import { useTranslation } from 'react-i18next';
 import { useAppContext }  from '../context/AppContext';
 import { useFoodSearch }  from '../context/FoodSearchContext';
 
+import NutritionSegmentedNav from '../components/nutrition/NutritionSegmentedNav';
 import '../theme/dashboard.css';
 import '../theme/search.css';
+import '../theme/nutrition.css';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -252,7 +254,7 @@ function NutritionSearchPage() {
       <IonHeader translucent>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/nutrition" />
+            <IonBackButton defaultHref="/nutrition/food-log" />
           </IonButtons>
           <IonSearchbar
             value={query}
@@ -268,6 +270,9 @@ function NutritionSearchPage() {
             autofocus
             aria-label={t('search.title')}
           />
+        </IonToolbar>
+        <IonToolbar>
+          <NutritionSegmentedNav />
         </IonToolbar>
       </IonHeader>
 

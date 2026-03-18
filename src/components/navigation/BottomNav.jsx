@@ -24,6 +24,8 @@ import switchDark     from '../../Navigation Icons/Switch_Nav_Dark.png';
 import progressLight  from '../../Navigation Icons/Progress_Nav_Light.png';
 import progressDark   from '../../Navigation Icons/Progress_Nav_Dark.png';
 
+import SectionSubnav     from './SectionSubnav';
+import { getSectionForPath } from './subnavConfig';
 import './bottomNav.css';
 
 // ---------------------------------------------------------------------------
@@ -175,8 +177,14 @@ const BottomNav = memo(function BottomNav() {
     }
   };
 
+  // Detect if the current route belongs to a section that has a subnav
+  const activeSection = getSectionForPath(currentPath);
+
   return (
     <div className="bn-wrap" role="navigation" aria-label="Main navigation">
+      {/* Floating sub-navigation popup — only rendered for sections that have one */}
+      {activeSection && <SectionSubnav section={activeSection} />}
+
       <div className="bn-bar">
         {/* ── Left 3 items ── */}
         <div className="bn-side bn-left">

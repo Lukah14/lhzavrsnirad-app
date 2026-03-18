@@ -12,6 +12,8 @@ import { useHistory } from 'react-router-dom';
 
 import { useAppContext }   from '../context/AppContext';
 
+import DashboardHeader     from '../components/dashboard/DashboardHeader';
+import DashboardStreakChips from '../components/dashboard/DashboardStreakChips';
 import WeekStrip            from '../components/dashboard/WeekStrip';
 import NutritionSummaryCard from '../components/dashboard/NutritionSummaryCard';
 import MealLogCard          from '../components/dashboard/MealLogCard';
@@ -31,25 +33,6 @@ import '../theme/dashboard.css';
 const todayISO = () => new Date().toISOString().split('T')[0];
 
 // ---------------------------------------------------------------------------
-// Brand top-bar (app name + streak badge)
-// ---------------------------------------------------------------------------
-
-function HomeTopBar({ streakCount }) {
-  return (
-    <div className="home-brand-bar">
-      <div className="home-brand-name">
-        <span className="home-brand-icon" aria-hidden="true">🌿</span>
-        Makrion
-      </div>
-      <div className="home-streak-badge" aria-label={`Streak: ${streakCount}`}>
-        <span aria-hidden="true">🔥</span>
-        {streakCount}
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
 
@@ -61,6 +44,8 @@ function HomePage() {
     getDashboardData,
     isDashboardLoading,
     addWater,
+    theme,
+    toggleTheme,
   } = useAppContext();
 
   const [selectedDate, setSelectedDate] = useState(todayISO);
@@ -80,17 +65,19 @@ function HomePage() {
     [addWater, selectedDate]
   );
 
-  // Cosmetic streak count from dashboard data
-  const streakCount = data
-    ? data.habits.filter((h) => h.done).length
-    : 0;
-
   return (
     <IonPage className="home-page">
-      {/* ── Sticky header: brand bar + week strip ── */}
+      {/* ── Sticky header: profile + greeting + streak chips + week strip ── */}
       <IonHeader translucent>
         <IonToolbar>
-          <HomeTopBar streakCount={streakCount} />
+          <DashboardHeader theme={theme} onToggleTheme={toggleTheme} />
+        </IonToolbar>
+        <IonToolbar>
+          <DashboardStreakChips
+            nutritionDays={7}
+            activityDays={12}
+            habitsDays={5}
+          />
         </IonToolbar>
         <IonToolbar>
           <WeekStrip
@@ -104,7 +91,14 @@ function HomePage() {
         {/* iOS collapsing header mirror */}
         <IonHeader collapse="condense">
           <IonToolbar>
-            <HomeTopBar streakCount={streakCount} />
+            <DashboardHeader theme={theme} onToggleTheme={toggleTheme} />
+          </IonToolbar>
+          <IonToolbar>
+            <DashboardStreakChips
+              nutritionDays={7}
+              activityDays={12}
+              habitsDays={5}
+            />
           </IonToolbar>
           <IonToolbar>
             <WeekStrip
@@ -118,20 +112,20 @@ function HomePage() {
 
         {data && (
           <div className="home-scroll-content">
-            {/* ① Cal AI-style calorie card + macro mini-cards */}
+            {/* ① Calorie hero + macro mini-cards */}
             <NutritionSummaryCard
               goals={data.goals}
               totals={data.totals}
             />
 
-            {/* ② Recently uploaded feed */}
-            <RecentlyUploadedCard
+            {/* ② Today's Meals (primary meal section) */}
+            <MealLogCard
               meals={data.meals}
               selectedDate={selectedDate}
             />
 
-            {/* ③ Meal log */}
-            <MealLogCard
+            {/* ③ Recently uploaded feed */}
+            <RecentlyUploadedCard
               meals={data.meals}
               selectedDate={selectedDate}
             />
